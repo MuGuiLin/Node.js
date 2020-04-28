@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>H5 WebSocket</title>
+    <style>
+        h1{text-align: center;}
+        form, section{ margin: auto; padding: 30px; width: 500px; text-align: center; border: 1px solid gray; border-radius: 5px;}
+        input{ margin-top: 12px; display: inline-block; width: 460px; padding: 8px; font-size: 16px;}
+        button{ margin: 12px; padding: 6px 18px; font-size: 16px;}
+    </style>
+</head>
+
+<body>
+    <h1>HTML5 WebSocket</h1><hr/>
+    <form>
+        <input type="text" id="wsip" placeholder="ws://47.96.11.40:2120" />
+        <input type="text" id="text" placeholder="hello world" />
+        <button type="button" id="begin-btn">建立链接</button>
+        <button type="button" id="send-btn">发送数据</button>
+        <button type="button" id="close-btn">关闭链接</button>
+    </form>
+    <br>
+    <section id="show-data"></section>
+
+</body>
+<script>
+    let wsObj = null;
+    let state = ['0 - 表示连接尚未建立', '1 - 表示连接已建立，可以进行通信', '2 - 表示连接正在进行关闭', '3 - 表示连接已经关闭或者连接不能打开'];
+
+    let Socket = (ip = 'ws://47.96.11.40:2120') => {
+        wsObj = new WebSocket(ip);
+
+        console.log(state[wsObj.readyState]);
+
+        wsObj.onopen = () => {
+            wsObj.send({ "id": "666" });
+            console.log('连接建立时触发');
+        }
+
+        wsObj.onmessage = (o) => {
+            console.log(o.data) //客户端接收服务端数据时触发
+            document.querySelector('#show-data').innerHTML = o.data;
+        }
+
+        wsObj.onerror = (e) => {
+            console.log(e) //通信发生错误时触发
+        }
+
+        wsObj.onclose = () => {
+            console.log('连接关闭时触发');
+        }
+    }
+
+    document.querySelector('#begin-btn').onclick = () => {
+        let wsip = document.querySelector('#wsip').value;
+        (wsip) ? Socket(wsip) : Socket();
+    }
+
+    document.querySelector('#send-btn').onclick = () => {
+        wsObj.send(document.querySelector('#text').value);
+    }
+
+    document.querySelector('#close-btn').onclick = () => {
+        wsObj.close();
+        alert('链接已关闭！');
+    }
+</script>
+
+</html>

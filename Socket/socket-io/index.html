@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Socket.IO 及时通讯</title>
+    <style>
+        h1 {text-align: center;}
+        .socket{ margin: auto; padding: 36px; width: 600px; text-align: center; border: 1px solid gray; border-radius: 5px;}
+        .socket .href{ text-align: left;}
+        .socket .href { line-height: 32px;}
+        .socket .count { text-align: right; font-size: 16px; color: green;}
+        .socket form { display: flex; flex-direction: row; justify-content: center; align-items: center;}
+        .socket input { padding: 0 10px; width: 380px; height: 40px; font-size: 18px; }
+        .socket button { width: 160px; height: 44px; font-size: 18px;margin: 12px;  }
+        .socket ul{ list-style: none; border: 1px solid gray; border-radius: 5px;}
+        .socket ul li{ list-style: none; padding-top: 10px; height: 36px; text-align: left;}
+        .socket ul li i{  font-size: 15px; color: hotpink;}
+        .socket ul li b { color: green;  padding: 0 20px; font-size: 16px; }
+        .socket ul li time { color: blueviolet;  padding: 0 20px; font-size: 15px; }
+    </style>
+</head>
+
+<body>
+
+    <h1>Socket.IO 及时通讯</h1>
+    <hr />
+    <br />
+
+    <section class="socket">
+        <div class="href">
+            <a href="https://socket.io" target="_blank">js官网：https://socket.io</a><br>
+            <a href="https://www.npmjs.com/package/socket.io" target="_blank">Npm：https://www.npmjs.com/package/socket.io</a>
+        </div>
+
+        <div class="count" id="count"></div>
+
+        <form id="message-form" action="" method="post">
+            <input type="text" id="text" />
+            <button type="submit">发 送</button>
+        </form>
+
+        <ul class="msg" id="msg"></ul>
+    </section>
+
+    <script src="./js/socket.io.js"></script>
+
+    <script>
+        let $ = (ele, doc = document) => {
+            let dom = doc.querySelectorAll(ele);
+            return dom.length > 1 ? dom : dom[0];
+        };
+
+        // 创建链接
+        var socket = io.connect('http://127.0.0.1:8088');
+
+        // 发送消息
+        socket.emit('login', { username: '🔊' + Date.now() });
+
+        // 收到消息
+        socket.on('users', function (data) {
+            $('#count').innerHTML = '当前在线人数：<b>' + data.number + '</b>人';
+        });
+
+        // 发送消息
+        $('#message-form')['onsubmit'] = function () {
+            socket.emit('message', { text: $('#text').value });
+            $('#text').value = '';
+            return false;
+        };
+
+        // 收到消息 new Date().toLocaleTimeString()
+        socket.on('receive_message', function (data) {
+            $('#msg').innerHTML = ('<li><i>' + data.user + ' 说:</i><b>' + data.text + '</b><time>⏰：' + new Date().toLocaleString() + '</p>') + '</time>' + $('#msg').innerHTML;
+            window.scroll(0, 0);
+        });
+
+    </script>
+
+</body>
+
+</html>
