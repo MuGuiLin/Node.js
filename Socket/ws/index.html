@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>WebSocket</title>
+        <style>
+            h1{ text-align: center; }
+        </style>
+    </head>
+
+    <body>
+        <h1>WebSocket 之 Ws</h1> <hr>
+		
+        <ul id="box">
+			<h3>ws服务器推过来的数据：</h3>
+		</ul>
+    </body>
+
+    <script>
+        (function(){
+            class ws{
+                constructor(params) {
+                    if ("WebSocket" in window) {
+                        console.log("您的浏览器支持 WebSocket!");
+                        this.init();
+                    } else {
+                        console.log("您的浏览器不支持 WebSocket!");
+                    };
+                };
+
+                init(){
+
+                    var  ws = new WebSocket("ws://127.0.0.1:3000");
+                    //var  ws = new WebSocket("ws://132.232.68.123:3000");
+
+                    ws.onopen = () => {
+                        ws.send("连接成功，发送数据");
+                        console.log("数据发送中...");
+                    };
+
+                    ws.onmessage = (evt) => {
+                        console.log('数据已接收：', evt.data);
+                        let li = document.createElement('li');
+                            li.innerText = evt.data;
+                        
+                        document.querySelector('#box').appendChild(li);
+                    };
+
+                    ws.onerror = () => {
+                        console.log("连接出错...!");
+                    };
+
+                    ws.onclose = () => {
+                        console.log("连接已关闭...!");
+                    }; 
+                };
+            }
+            new ws();
+        }());
+    </script>
+
+</html>
