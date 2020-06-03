@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ejs模板引擎</title>
+    <style>
+        h1{text-align: center;}
+        pre{font-size: 16px;}
+        code{display: grid; padding: 20px; border-radius: 8px; background: #AAA; color: #000088; overflow-x: auto;}
+    </style>
+</head>
+<body>
+    <h1>欢迎使用<%= mymb %>模板引擎！</h1>
+    <hr>
+    Ejs：<a target="_blank" href="<%= url %>">Ejs Npm 学习网址！！！</a>，
+    Koa-Ejs：<a target="_blank" href="<%= koaEjs %>">Koa-Ejs Npm 学习网址！！！</a>
+    <pre>
+        <h2>Demo</h2>
+        <code>
+
+            let template = ejs.compile(str, options);
+            template(data);
+            // => Rendered HTML string
+            
+            ejs.render(str, data, options);
+            // => Rendered HTML string
+            
+            ejs.renderFile(filename, data, options, function(err, str){
+                // str => Rendered HTML string
+            });
+
+            // 模板语法：
+
+            &lt;%- include('header') -%>
+
+            &lt;h1> Title &lt;/h1>
+            &lt;p> My page &lt;/p>
+
+            &lt;%- include('footer') -%>
+        </code>
+    </pre>
+</body>
+</html>

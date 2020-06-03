@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koa-Ejs</title>
+    <link rel="stylesheet" href="css/base.css">
+</head>
+
+<body>
+    <%- include('components/header') -%>
+
+    <h1>新闻页</h1>
+    <hr>
+
+    <section class="news">
+        <h2>渲染组件：&lt;%- include('components/xxx') -%&gt;</h2>
+        <%- include('components/header') -%>
+
+        <h2>渲染变量：&lt;%= xxx %&gt;</h2>
+        <p><%= list[2].content %></p>
+
+
+        <h2>渲染html：&lt;%- xxx %&gt;</h2>
+        <p><%- list[2].content %></p>
+
+
+        <h2>循环渲染 &lt;%for(var i; i < len; i++) {}%&gt;：</h2>
+        <ul>
+            <%for(let i = 0; i < list.length; i++){%>
+            <li>
+                <i><%= list[i].id %></i>
+                <b><%= list[i].title %>：</b>
+                <code><%- list[i].content %></code>
+                <br>
+            </li>
+            <%}%>
+
+            <li><%= list[2].id %></li>
+        </ul>
+
+        <h2>条件渲染 &lt;%if(){} else{}%&gt;：</h2>
+        <%if(0.5 <= rdom){%>
+        <h3><%= rdom %>：大于0.5</h3>
+        <%}else{%>
+        <h3><%= rdom %>：小于0.5</h3>
+        <%}%>
+    </section>
+
+    <%- include('components/footer') -%>
+
+    <script src="./js/base.js"></script>
+</body>
+
+</html>

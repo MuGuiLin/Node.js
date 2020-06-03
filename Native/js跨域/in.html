@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>调用麦克风</h1>
+    <hr>
+    <button onclick="sedMedia()">调用麦克风</button>
+
+    <script>
+        let mediaSource = null;
+        let audioContext = null;
+        let scriptProcessor = null;
+
+        function sedMedia() {
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+            // 创建音频环境
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)()
+                audioContext.resume()
+                if (!audioContext) {
+                    alert('浏览器不支持webAudioApi相关接口')
+                    return
+                }
+            } catch (e) {
+                if (!audioContext) {
+                    alert('浏览器不支持webAudioApi相关接口')
+                    return
+                }
+            };
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices
+                    .getUserMedia({
+                        audio: true,
+                        video: false,
+                    })
+                    .then(stream => {
+                        alert(666)
+                        console.log(stream);
+                        // 创建一个用于通过JavaScript直接处理音频
+                        scriptProcessor = audioContext.createScriptProcessor(0, 1, 1)
+                        scriptProcessor.onaudioprocess = e => {
+                            // 去处理音频数据
+                            console.log(e.inputBuffer.getChannelData(0))
+                        }
+                        // 创建一个新的MediaStreamAudioSourceNode 对象，使来自MediaStream的音频可以被播放和操作
+                        mediaSource = audioContext.createMediaStreamSource(stream);
+
+                        // 连接
+                        mediaSource.connect(scriptProcessor);
+
+                        scriptProcessor.connect(audioContext.destination);
+                    })
+                    .catch(e => {
+                        alert(000)
+                        console.log(e)
+                    })
+            }
+        };
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "art-template-demo",
+  "version": "1.0.0",
+  "description": "类似Angular数据绑定的语法，art-template还支持ejs的语法",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "模板引擎、art-template"
+  ],
+  "author": "沐枫",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "koa": "^2.11.0",
+    "koa-art-template": "^1.1.1"
+  }
+}

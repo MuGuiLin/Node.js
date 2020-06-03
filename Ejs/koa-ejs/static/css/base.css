@@ -1,0 +1,73 @@
+header.header {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    padding        : 0 20px;
+    height         : 80px;
+    background     : #11a8bb;
+}
+
+header.header nav a {
+    padding  : 10px 20px;
+    color    : white;
+    font-size: 18px;
+}
+
+header.header nav a:hover {
+    color     : purple;
+    background: white;
+}
+
+body {
+    height: 100vh;
+}
+
+footer.footer {
+    padding   : 0 30px;
+    height    : 120px;
+    border-top: 2px solid #11a8bb;
+    text-align: center;
+    color     : #11a8bb;
+    background: #aaa;
+}
+
+h1 {
+    text-align: center;
+}
+
+pre {
+    font-size: 16px;
+}
+
+code {
+    display      : grid;
+    padding      : 20px;
+    border-radius: 8px;
+    background   : #0f0f32;
+    color        : #fff;
+    overflow-x   : auto;
+}
+.index{
+    padding: 50px;
+
+}
+
+.news {
+    padding: 50px;
+}
+
+.news li {
+    line-height: 32px;
+}
+
+.about {
+    padding: 50px;
+}
+
+.not-404 {
+    width          : 100vw;
+    height         : 100vh;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}

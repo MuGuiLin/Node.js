@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koa-Art-Template</title>
+    <link rel="stylesheet" href="./css/base.css">
+</head>
+
+<body>
+
+    <%- include('components/header') -%>
+
+    <h1><%= name %></h1>
+    <hr>
+
+    <section class="index">
+        <h2>当前URL是址：<%= url %></h2>
+        <h2>中文文档：<a href="https://aui.github.io/art-template/zh-cn/index.html" target="_blank" >https://aui.github.io/art-template/zh-cn/index.html</a></h2>
+        <h2>koa-art-template：<a href="https://www.npmjs.com/package/koa-art-template" target="_blank" >https://www.npmjs.com/package/koa-art-template</a></h2>
+
+        <h3>关于koa的模板引擎除了art-template以外还有很多如：ejs、jade、nunjucks等</h3>
+        <pre>
+        <code>
+            // 安装
+            npm install --save art-template
+            npm install --save koa-art-template
+
+            // 配置        
+            const Koa = require('koa');
+            const path = require('path');
+            const render = require('koa-art-template');
+            
+            const app = new Koa();
+            render(app, {
+                root: path.join(__dirname, 'view'),
+                extname: '.art',
+                debug: process.env.NODE_ENV !== 'production'
+            });
+            
+            app.use(async function (ctx) {
+                await ctx.render('user');
+            });
+            
+            app.listen(8080);
+        </code>
+    </pre>
+
+    <img src="./img/art-template.png" alt="" width="100%" />
+
+    </section>
+
+    <%- include('components/footer') -%>
+
+    <script src="js/base.js"></script>
+
+</body>
+
+</html>

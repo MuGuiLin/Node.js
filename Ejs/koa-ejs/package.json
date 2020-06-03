@@ -1,0 +1,15 @@
+{
+  "name": "koa-ejs-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "沐枫",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-ejs": "^4.3.0"
+  }
+}

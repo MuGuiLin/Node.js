@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koa-Ejs</title>
+    <link rel="stylesheet" href="../static/css/base.css">
+</head>
+
+<body>
+    <% include components/header.html %>
+    <h1>Koa-Ejs 【.use(Views('./template'), {map: {html: 'ejs'}})】</h1>
+    <hr>
+    <h2>配置模板引擎中间件：.use(Views('./template',{extension: 'ejs'}))</h2>
+
+    <pre>
+        <code>
+            const Koa = require('koa');
+            const render = require('koa-ejs');
+            const path = require('path');
+            
+            const app = new Koa();
+            render(app, {
+            root: path.join(__dirname, 'view'),
+            layout: 'template',
+            viewExt: 'html',
+            cache: false,
+            debug: true
+            });
+            
+            app.use(async function (ctx) {
+            await ctx.render('user');
+            });
+            
+            app.listen(7001);
+        </code>
+    </pre>
+
+    <script src="../static/js/base.js"></script>
+
+</body>
+
+</html>

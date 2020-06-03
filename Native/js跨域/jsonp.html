@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsonp</title>
+    <style>
+        h1{text-align: center;}
+        code{ display: block; padding: 20px; background: #111; color: white; font-size: 18px;}
+    </style>
+</head>
+
+<body>
+    <h1>jsonp</h1>
+    <hr>
+    <button onclick="getJson()">获取 GET JSON 数据</button>
+    <pre>
+        <code id="code"></code>
+    </pre>
+
+    <script>
+        function mupiao(data) {
+            console.log(data);
+            code.innerHTML = JSON.stringify(data);
+        };
+
+        function getJson() {
+            const script = document.createElement('script');
+            script.src = 'http://127.0.0.1:3000/jsonp?callback=mupiao';
+            document.body.appendChild(script);
+        };
+
+    </script>
+    <!-- <script src="http://127.0.0.1:3000/jsonp?callback=callback"></script> -->
+</body>
+
+</html>

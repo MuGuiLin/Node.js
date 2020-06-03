@@ -2,6 +2,11 @@
 	下载地址：[https://nodejs.org/en/download/]
 	
 	历史版本：[https://nodejs.org/dist/]
+	
+# node 热更新：
+	npm i -g nodemon
+	
+	nodemon app.js
 
 
 # Node.js环境升级：

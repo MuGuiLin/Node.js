@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koa-Ejs</title>
+    <link rel="stylesheet" href="./css/base.css">
+</head>
+
+<body>
+    <%- include('components/header') -%>
+
+    <h1>关于我</h1>
+    <hr>
+
+    <section class="about">
+        <h2>👉：<%= userInfo.user_id %></h2>
+        <h2>😜：<%= userInfo.user_name %></h2>
+        <h2>🍰：<%= userInfo.age %></h2>
+        <h2>📱：<%= userInfo.mobile %></h2>
+        <h2>💻：<%= userInfo.job %></h2>
+    </section>
+
+
+    <%- include('components/footer') -%>
+
+    <script src="./js/base.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koa-Ejs</title>
+    <link rel="stylesheet" href="./css/base.css">
+</head>
+
+<body>
+
+    <%- include('components/header') -%>
+
+    <h1><%= name %></h1>
+    <hr>
+    
+    <section class="index">
+        <h2>当前URL是址：<%= url %></h2>
+        <h2>配置模板引擎中间件：.use(Views('./template',{extension: 'ejs'}))</h2>
+        <h2>koa-ejs：<a href="https://www.npmjs.com/package/koa-ejs" target="_blank" >https://www.npmjs.com/package/koa-ejs</a></h2>
+
+        <h3>关于koa的模板引擎除了ejs以外还有很多如：jade、nunjucks、art-template等</h3>
+        <pre>
+        <code>
+            const Koa = require('koa');
+            const render = require('koa-ejs');
+            const path = require('path');
+            
+            const app = new Koa();
+            render(app, {
+                root: path.join(__dirname, 'view'),
+                layout: 'template',
+                viewExt: 'html',
+                cache: false,
+                debug: true
+            });
+            
+            app.use(async function (ctx) {
+                await ctx.render('user');
+            });
+            
+            app.listen(7001);
+        </code>
+    </pre>
+    </section>
+
+    <%- include('components/footer') -%>
+
+    <script src="js/base.js"></script>
+
+</body>
+
+</html>
