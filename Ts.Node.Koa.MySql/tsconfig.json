@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es2016",                     // 编译js目标版本
+        "module": "commonjs",                   // 编译后的模块类型【node.js => commonjs】
+        "outDir": "./dist",                     // 指定编译后的js文件存放目录
+
+        "sourceMap": true,          
+        "noImplicitAny": true,                  // 隐私类型
+        "strictNullChecks": true,               // 开启代码严格检查
+
+        "allowJs": true,                        // 开启可以引入非ts模块
+        "resolveJsonModule": true,              // 开启加载json模块
+        "esModuleInterop": true,                // 处理非ts模块化引入问题
+        "allowSyntheticDefaultImports": true,   // 处理非ts模块化导出问题
+
+        "experimentalDecorators": true,         // 开启装饰器特性
+        "emitDecoratorMetadata": true,          // 开启装饰器源数据
+    },
+
+    "include": [
+        "./src/**/*"                            // ts源文件存放目录(在src目录下的所有ts文件)
+    ]
+}

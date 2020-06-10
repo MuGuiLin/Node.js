@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button type="button" id="get-btn"> 请求数据 </button>
+    <button type="button" id="get-btn2"> 请求数据2 </button>
+    <script>
+
+
+        document.querySelector('#get-btn').onclick = function () {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://localhost:8080/api/v2/user/submit', true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.status && xhr.statusText) {
+                    console.log(xhr.responseText)
+                }
+            }
+
+            xhr.send(JSON.stringify({ name: '沐枫', pwd: '123456', age: 28 }));
+
+        }
+
+        document.querySelector('#get-btn2').onclick = function () {
+
+            const xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://localhost:8080/api/v2/user/submit2', true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.status && xhr.statusText) {
+                    console.log(xhr.responseText)
+                }
+            }
+
+            xhr.send(JSON.stringify({ name: '沐枫', pwd: '123456', age: 28 }));
+
+        }
+    </script>
+</body>
+
+</html>
