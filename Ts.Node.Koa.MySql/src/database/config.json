@@ -1,0 +1,26 @@
+{
+    "development": {
+        "host": "localhost",
+        "prot": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": null,
+        "database": "ts_node_koa_mysql"
+    },
+    "test": {
+        "host": "localhost",
+        "prot": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": null,
+        "database": "ts_node_koa_mysql"
+    },
+    "production": {
+        "host": "localhost",
+        "prot": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": null,
+        "database": "ts_node_koa_mysql"
+    }
+}

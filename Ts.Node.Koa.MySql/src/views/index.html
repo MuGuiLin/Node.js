@@ -8,42 +8,200 @@
 </head>
 
 <body>
-    <button type="button" id="get-btn"> 请求数据 </button>
-    <button type="button" id="get-btn2"> 请求数据2 </button>
+    <a href="http://localhost:8080/api/v2/user/login" target="_blank">GET请求数据</a>
+    <button type="button" id="get-btn"> GET请求数据 </button>
+    <button type="button" id="post-btn"> POST请求数据 </button>
+    <button type="button" id="post-btn2"> POST请求数据2 </button>
+    <h1 id="h1"></h1>
     <script>
 
+        class Ajax {
+            constructor({
+                url = null,
+                method = 'GET',
+                type = null,
+                data = null,
+                dataType = 'JSON',
+                cache = true,
+                async = true,
+                timeout = 10000,
+                beforeSend = null,
+                success = null,
+                error = null
+            } = {}) {
+                this.url = url;
+                this.method = type === null ? method : type;
+                this.isGet = /^(GET|HEAD|DELETE)$/i.test(this.method);
+                this.data = data;
+                this.dataType = dataType;
+                this.cache = cache;
+                this.async = async;
+                this.timeout = timeout;
+                this.beforeSend = typeof beforeSend === 'function' ? beforeSend : new Function();
+                this.success = typeof success === 'function' ? success : new Function();
+                this.error = typeof error === 'function' ? error : new Function();
+                this.Init();
+            };
+
+            GetSymol() {
+                return -1 < this.url.indexOf('?') ? '&' : '?';
+            }
+
+            Cache() {
+                (!this.cache) ? this.url += `${this.GetSymol()}v=${Math.random()}` : null;
+            };
+
+            FormatData() {
+                if (({}).toString.call(this.data) === '[object Object]') {
+                    let obj = this.data,
+                        str = ``;
+                    for (let o in obj) {
+                        if (obj.hasOwnProperty(o)) {
+                            str += `${o}=${obj[o]}&`;
+                        }
+                    }
+                    this.data = str.replace(/&$/g, '');
+                }
+            };
+
+            CreactXhr() {
+                if (window.ActiveXObject) {
+                    try {
+                        return new window.ActiveXObject("Msxml2.XMLHTTP");
+                    } catch (e) {
+                        return new window.ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                } else if (window.XMLHttpRequest) {
+                    try {
+                        return new XMLHttpRequest();
+                    } catch (e) {
+                        return false;
+                    }
+                };
+            };
+
+            Init() {
+                if (null !== this.data) {
+                    this.FormatData();
+                    if (this.isGet) {
+                        this.url += this.GetSymol() + this.data;
+                        this.data = null;
+                    }
+                };
+                this.isGet ? this.Cache() : null;
+                this.beforeSend();
+                try {
+                    fetch(this.url, {
+                        body: this.data,
+                        cache: 'no-cache',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+                        },
+                        method: this.method,
+                        mode: 'cors',
+                        // credentials: 'include'
+                        redirect: 'follow',
+                        referrer: 'no-referrer'
+                    }).then(o => {
+                        if (o.status >= 200 && o.status < 300) return o;
+                        let err = new Error(o.statusText);
+                        err.response = o;
+                        throw err;
+                    }).then(o => {
+                        return o.json();
+                    }).then(o => {
+                        this.success(o);
+                    }).catch(err => {
+                        this.error(err);
+                    });
+                } catch (error) {
+                    let xhr = this.CreactXhr();
+                    xhr.timeout = this.timeout;
+                    xhr.responseType = this.dataType.toUpperCase();
+                    xhr.onreadystatechange = () => {
+                        if (!/^[23]\d{2}$/.test(xhr.status)) {
+                            this.error(xhr.statusText);
+                            return false;
+                        }
+                        if (4 === xhr.readyState) {
+                            let res = xhr.responseText;
+                            try {
+                                switch (this.dataType.toUpperCase()) {
+                                    case 'TEXT':
+                                    case 'HTML':
+                                        break;
+                                    case 'JSON':
+                                        res = JSON.parse(res);
+                                        break;
+                                    case 'XML':
+                                        res = xhr.responseXML;
+                                        break;
+                                };
+                            } catch (err) { };
+                            this.success(res);
+                        }
+                    };
+                    xhr.open(this.method, this.url, this.async);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                    // xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                    xhr.onload = res => { };
+                    xhr.ontimeout = res => { };
+                    xhr.onerror = res => {
+                        this.error(res)
+                    };
+                    // xhr.upload.onprogress = res => {};
+                    xhr.send(this.data);
+                };
+            };
+        };
 
         document.querySelector('#get-btn').onclick = function () {
-
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('POST', 'http://localhost:8080/api/v2/user/submit', true);
-
-            xhr.onreadystatechange = function () {
-                if (xhr.status && xhr.statusText) {
-                    console.log(xhr.responseText)
+            new Ajax({
+                type: 'GET',
+                url: 'http://localhost:8080/api/v2/user/user4',
+                data: {
+                    id: 123456,
+                    age: 666,
+                    name: '沐枫'
+                },
+                success: function (data) {
+                    console.log(data);
+                    h1.innerHTML = data;
                 }
-            }
+            });
+        };
 
-            xhr.send(JSON.stringify({ name: '沐枫', pwd: '123456', age: 28 }));
-
-        }
-
-        document.querySelector('#get-btn2').onclick = function () {
-
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('POST', 'http://localhost:8080/api/v2/user/submit2', true);
-
-            xhr.onreadystatechange = function () {
-                if (xhr.status && xhr.statusText) {
-                    console.log(xhr.responseText)
+        document.querySelector('#post-btn').onclick = function () {
+            new Ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/api/v2/user/submit',
+                data: JSON.stringify({
+                    name: '沐枫',
+                    pwd: '123456',
+                    age: 28
+                }),
+                success: function (data) {
+                    console.log(data);
+                    h1.innerHTML = data;
                 }
-            }
+            });
+        };
 
-            xhr.send(JSON.stringify({ name: '沐枫', pwd: '123456', age: 28 }));
-
-        }
+        document.querySelector('#post-btn2').onclick = function () {
+            new Ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/api/v2/user/submit2',
+                data: JSON.stringify({
+                    name: '沐枫',
+                    pwd: '123456',
+                    age: 28
+                }),
+                success: function (data) {
+                    console.log(data);
+                    h1.innerHTML = data;
+                }
+            });
+        };
     </script>
 </body>
 
