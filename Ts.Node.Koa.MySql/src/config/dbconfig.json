@@ -1,0 +1,29 @@
+{
+    "development": {
+        "host": "localhost",
+        "port": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": "",
+        "database": "ts_node_koa_mysql",
+        "timezone": "+08:00"
+    },
+    "test": {
+        "host": "localhost",
+        "port": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": "",
+        "database": "ts_node_koa_mysql",
+        "timezone": "+08:00"
+    },
+    "production": {
+        "host": "localhost",
+        "port": 3306,
+        "dialect": "mysql",
+        "username": "root",
+        "password": "",
+        "database": "ts_node_koa_mysql",
+        "timezone": "+08:00"
+    }
+}

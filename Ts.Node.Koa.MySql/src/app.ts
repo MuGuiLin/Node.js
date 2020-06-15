@@ -1,7 +1,8 @@
 import Koa, { Context } from 'koa';
 import KoaRouter from "koa-router";
 import KoaBodyParser from "koa-bodyparser";
-import { bootstrapControllers, Ctx } from "koa-ts-controllers";
+import { bootstrapControllers } from "koa-ts-controllers";
+import { Sequelize } from "sequelize-typescript";
 
 import Config from './config'
 
@@ -10,6 +11,15 @@ import Config from './config'
     const App = new Koa();
 
     const Router = new KoaRouter();
+
+    // 链接数据库
+    const db = new Sequelize({
+        ...Config.database,
+        models: [__dirname + '/models/**/*.ts']  //注models目录中不要出现index.ts（如：user/index.ts）不然会找不到！！要（要：user/User.ts）[而且文件名首字母大写，因为目录名和文件名不可相同]才行！！
+    });
+
+    // console.log(db);
+
 
     App.use(async (ctx, next) => {
         ctx.set("Access-Control-Allow-Origin", "*");
@@ -21,7 +31,7 @@ import Config from './config'
         //     ctx.body = 404;
         // }
     });
-    
+
     // 路由管理
     await bootstrapControllers(App, {
         router: Router,
@@ -39,7 +49,7 @@ import Config from './config'
         //     ctx.status = 500
         // },
         errorHandler: async (err: any, ctx: Context) => { // 可选的错误处理程序
-            // console.log(err);
+            console.log(err);
             let status: number = 500;
             let body: any = {
                 statusCode: status,
@@ -75,6 +85,6 @@ import Config from './config'
 
     // 监听服务
     App.listen(Config.server.prot, Config.server.host, () => {
-        console.log('服务启动成功：监听' + Config.server.prot + ':' + Config.server.host);
+        console.log('服务启动成功：监听' + Config.server.host + ':' + Config.server.prot);
     });
 })();

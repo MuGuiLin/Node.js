@@ -6,10 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node-dev ./src/app.ts",
-    "db:create": "sequelize db:create",
+    "db:create": "sequelize db:create", 
     "db:drop": "sequelize db:drop",
-    "db:migrate": "sequelize db:migrate",
-    "db:migrate:undo:all": "sequelize db:migrate:undo:all"
+    "db:migrate": "sequelize db:migrate", 
+    "db:migrate:undo:all": "sequelize db:migrate:undo:all",
+    "db:seed:all": "sequelize db:seed:all", 
+    "db:seed:undo:all": "sequelize db:seed:undo:all" ,
+    "db:init": "npm run db:create && npm run db:migrate && npm run db:seed:all", 
+    "db:redo": "npm run db:drop && npm run db:init"
   },
   "keywords": [
     "Koa",
@@ -24,7 +28,8 @@
     "koa-router": "^9.0.1",
     "koa-ts-controllers": "^2.1.0",
     "mysql2": "^2.1.0",
-    "sequelize": "^5.21.12"
+    "sequelize": "^5.21.12",
+    "sequelize-typescript": "^1.1.0"
   },
   "devDependencies": {
     "@types/koa": "^2.11.3",

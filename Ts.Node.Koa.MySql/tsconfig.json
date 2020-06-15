@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2016",                     // 编译js目标版本
+        "target": "es6",                     // 编译js目标版本
         "module": "commonjs",                   // 编译后的模块类型【node.js => commonjs】
         "outDir": "./dist",                     // 指定编译后的js文件存放目录
 
@@ -13,7 +13,7 @@
         "esModuleInterop": true,                // 处理非ts模块化引入问题
         "allowSyntheticDefaultImports": true,   // 处理非ts模块化导出问题
 
-        "experimentalDecorators": true,         // 开启装饰器特性
+        "experimentalDecorators": true,         // 开启装饰器特性 
         "emitDecoratorMetadata": true,          // 开启装饰器源数据
     },
 

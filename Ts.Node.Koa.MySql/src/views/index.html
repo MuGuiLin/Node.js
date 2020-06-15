@@ -5,13 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+    </style>
 </head>
 
 <body>
-    <a href="http://localhost:8080/api/v2/user/login" target="_blank">GET请求数据</a>
-    <button type="button" id="get-btn"> GET请求数据 </button>
-    <button type="button" id="post-btn"> POST请求数据 </button>
-    <button type="button" id="post-btn2"> POST请求数据2 </button>
+    <a href="http://localhost:8080/api/v2/test/hello">GET请求测试</a>
+    <button type="button" id="get-btn"> GET普通请求 </button>
+    <button type="button" id="get-btn2"> GET动态请求 </button>
+    <button type="button" id="post-btn"> POST请求 </button>
+    <button type="button" id="post-btn2"> POST请求2 </button>
+    <button type="button" id="post-btn3"> POST请求3 </button>
+    <button type="button" id="post-btn4"> POST请求注册 </button>
     <h1 id="h1"></h1>
     <script>
 
@@ -21,6 +30,7 @@
                 method = 'GET',
                 type = null,
                 data = null,
+                parType = false,
                 dataType = 'JSON',
                 cache = true,
                 async = true,
@@ -33,6 +43,8 @@
                 this.method = type === null ? method : type;
                 this.isGet = /^(GET|HEAD|DELETE)$/i.test(this.method);
                 this.data = data;
+                this.form = new FormData();
+                this.parType = parType;
                 this.dataType = dataType;
                 this.cache = cache;
                 this.async = async;
@@ -53,14 +65,32 @@
 
             FormatData() {
                 if (({}).toString.call(this.data) === '[object Object]') {
-                    let obj = this.data,
-                        str = ``;
-                    for (let o in obj) {
-                        if (obj.hasOwnProperty(o)) {
-                            str += `${o}=${obj[o]}&`;
+                    if (0) {
+                        console.log(Object.keys(this.data));
+                        for (const key in this.data) {
+                            if (this.data.hasOwnProperty(key)) {
+                                this.form.append(key, this.data[key]);
+                            }
+                        };
+                        this.data = null;
+                    } else {
+                        let obj = this.data, par = ``;
+                        if (this.parType) {
+                            for (let o in obj) {
+                                if (obj.hasOwnProperty(o)) {
+                                    par += `/${obj[o]}`;
+                                }
+                            }
+                            this.data = par;
+                        } else {
+                            for (let o in obj) {
+                                if (obj.hasOwnProperty(o)) {
+                                    par += `${o}=${obj[o]}&`;
+                                }
+                            }
+                            this.data = par.replace(/&$/g, '');
                         }
                     }
-                    this.data = str.replace(/&$/g, '');
                 }
             };
 
@@ -84,22 +114,30 @@
                 if (null !== this.data) {
                     this.FormatData();
                     if (this.isGet) {
-                        this.url += this.GetSymol() + this.data;
+                        if (this.parType) {
+                            this.url += this.data;
+                        } else {
+                            this.url += this.GetSymol() + this.data;
+                        }
                         this.data = null;
                     }
                 };
                 this.isGet ? this.Cache() : null;
                 this.beforeSend();
+
                 try {
                     fetch(this.url, {
+                        // body: this.data || this.form,
                         body: this.data,
                         cache: 'no-cache',
                         headers: {
+                            'Accept': 'application/json',
+                            // 'Content-Type': 'application/json; charset=utf-8'
                             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
                         },
                         method: this.method,
-                        mode: 'cors',
-                        // credentials: 'include'
+                        mode: 'cors', //请求的模式
+                        // credentials: 'include' //为了在当前域名内自动发送 cookie ， 必须提供这个选项
                         redirect: 'follow',
                         referrer: 'no-referrer'
                     }).then(o => {
@@ -108,6 +146,8 @@
                         err.response = o;
                         throw err;
                     }).then(o => {
+                        console.log(o)
+                        this.success(JSON.stringify(o));
                         return o.json();
                     }).then(o => {
                         this.success(o);
@@ -137,8 +177,11 @@
                                         res = xhr.responseXML;
                                         break;
                                 };
-                            } catch (err) { };
-                            this.success(res);
+                            } catch (err) {
+                                this.error(err);
+                            } finally {
+                                this.success(res);
+                            };
                         }
                     };
                     xhr.open(this.method, this.url, this.async);
@@ -150,39 +193,74 @@
                         this.error(res)
                     };
                     // xhr.upload.onprogress = res => {};
-                    xhr.send(this.data);
+                    xhr.send(this.data || this.form);
                 };
             };
         };
 
+        const host = 'http://localhost:8080/api/v2';
+
         document.querySelector('#get-btn').onclick = function () {
             new Ajax({
                 type: 'GET',
-                url: 'http://localhost:8080/api/v2/user/user4',
-                data: {
-                    id: 123456,
-                    age: 666,
-                    name: '沐枫'
-                },
+                url: host + '/test/myapi5?id=123456',
+                // url: host + '/test/myapi6?id=123456&name=沐枫&sex=男&age=28',
                 success: function (data) {
-                    console.log(data);
-                    h1.innerHTML = data;
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
                 }
             });
         };
 
+        document.querySelector('#get-btn2').onclick = function () {
+            new Ajax({
+                type: 'GET',
+                parType: 'dynamic',
+
+                // url: host + '/test/myapi', 
+                // data: {
+                //     id: 123456
+                // },
+
+                // url: host + '/test/myapi2',
+                // data: {
+                //     id: 2018,
+                //     pid: 666
+                // },
+
+                // url: host + '/test/myapi3',
+                // data: {
+                //     id: 123456
+                // },
+
+                url: host + '/test/myapi4',
+                data: {
+                    id: 888,
+                    name: '沐枫',
+                    sex: '男',
+                    age: 28
+                },
+
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
+                }
+            });
+        };
+
+
         document.querySelector('#post-btn').onclick = function () {
             new Ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/api/v2/user/submit',
-                data: JSON.stringify({
+                url: host + '/test/submit',
+                data: {
                     name: '沐枫',
-                    pwd: '123456',
-                    age: 28
-                }),
+                    age: 28,
+                    job: 'Web全栈开发'
+                },
                 success: function (data) {
-                    console.log(data);
-                    h1.innerHTML = data;
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
                 }
             });
         };
@@ -190,15 +268,48 @@
         document.querySelector('#post-btn2').onclick = function () {
             new Ajax({
                 type: 'POST',
-                url: 'http://localhost:8080/api/v2/user/submit2',
-                data: JSON.stringify({
+                url: host + '/test/submit2',
+                data: {
                     name: '沐枫',
                     pwd: '123456',
                     age: 28
-                }),
+                },
                 success: function (data) {
-                    console.log(data);
-                    h1.innerHTML = data;
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
+                }
+            });
+        };
+
+        document.querySelector('#post-btn3').onclick = function () {
+            new Ajax({
+                type: 'POST',
+                url: host + '/test/submit3',
+                data: {
+                    id: 888,
+                    name: '沐枫',
+                    sex: '男',
+                    age: 28
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
+                }
+            });
+        }; 
+        
+        document.querySelector('#post-btn4').onclick = function () {
+            new Ajax({
+                type: 'POST',
+                url: host + '/user/regist',
+                data: {
+                    username: '沐枫',
+                    password: '123456',
+                    rePassword: '123456'
+                },
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    h1.innerHTML = JSON.stringify(data);
                 }
             });
         };
