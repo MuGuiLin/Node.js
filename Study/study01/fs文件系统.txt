@@ -1,0 +1,9 @@
+
+Nodejs 中文文档：http://nodejs.cn/api
+
+Nodejs 文件系统 - fs
+
+fs 模块提供了用于与文件系统进行交互（以类似于标准 POSIX 函数的方式）的 API，所有的文件系统操作都具有同步和异步的形式。
+
+要使用此模块：
+    const fs = require('fs');  // 直接导入即可，nodejs自带模块

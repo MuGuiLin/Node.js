@@ -50,6 +50,6 @@ test('测试：${methodName}', () => {
     // 执行方法
     const ret = ${methodName}();
 });
-        `;
+`    
     }
 };
