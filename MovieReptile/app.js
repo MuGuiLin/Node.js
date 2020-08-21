@@ -18,6 +18,10 @@ function Ajax(url, callBack) {
     request(url, opts, callBack);
 };
 
+
+http://www.y80s.com
+https://www.ygdy8.net
+
 // https://www.ygdy8.net/html/gndy/jddy/20200722/60250.html
 Ajax('https://www.ygdy8.net/html/gndy/jddy/20200204/59654.html',
     function (error, response, body) {
