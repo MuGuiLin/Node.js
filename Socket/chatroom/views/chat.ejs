@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>简易聊天室</title>
+	<style>
+		body{background:linear-gradient(-225deg,#77ffd2,#6297db 48%,#1eecff);}
+		h1{color:#fff;text-align:center;}
+		.num{margin:auto;width:60%;color:#fff;text-align:right;line-height:40px;}
+		.num b{color:#ff0;}
+		.box{overflow-y:auto;margin:auto;width:60%;height:520px;border:1px solid #fff;background:#ececec;}
+		.btn{position:fixed;bottom:0;left:20%;box-sizing:border-box;margin:auto;padding:10px;width:60%;border:1px solid #fff;background:#2dd8f6;}
+		.btn .text{float:left;padding-left:4px;width:68%;height:30px;vertical-align:top;}
+		.btn .send{float:right;width:28%;height:36px;vertical-align:top;}
+		.list{margin:10px auto;padding:4px;width:90%;border:1px solid #8a00ff;border-radius:3px;color:#000;line-height:30px;}
+		.list b{color:#00f;}
+		.list i{color:red;font-size:14px;}
+		.list p{margin-top:0;padding-left:30px;font-size:18px;line-height:30px;}
+		.list p i{color:#ff00af;font-style:normal;}
+		@media screen and (max-width:750px){.box{width:90%;}
+		.btn{left:0;display:flex;width:100%;}
+		.num{width:90%;}
+		}
+		@keyframes mover{40%{color:#f4f4f4;opacity:1;}
+		60%{color:#07a931;}
+		80%{color:#ff00b1;}
+		}
+		.h1-move{margin:20px auto;width:80%;color:#333;text-align:center;text-transform:uppercase;letter-spacing:2px;font-size:42px;}
+		.h1-move i:nth-of-type(2){animation-delay:.05s;}
+		.h1-move i:nth-of-type(3){animation-delay:.1s;}
+		.h1-move i:nth-of-type(4){animation-delay:.15s;}
+		.h1-move i:nth-of-type(5){animation-delay:.2s;}
+		.h1-move i{text-shadow:0 1px 10px #fff;font-weight:700;font-style:normal;animation:mover 1s ease-in-out infinite;}
+	</style>
+</head>
+
+<body>
+	<h1 class="h1-move"><i>简</i> <i>易</i> <i>聊</i> <i>天</i> <i>室</i></h1>
+
+	<hr>
+	<div class="num">欢迎 <b><%= user %></b>！ 当前在线人数：<b id="user-num">0</b> 位</div>
+	<section class="box" id="box"></section>
+
+	<hr>
+	<div class="btn">
+		<input type="text" class="text" id="text" value="" placeholder="请输入聊天内容" /> &nbsp; <input type="button" class="send" id="send" value="发 送" />
+	</div>
+
+</body>
+
+<script src="js/jquery.min.js"></script>
+<script src="socket.io/socket.io.js"></script>
+
+<script>
+	//对象
+	let ws = io();
+
+	//底部
+	let scroll = (o) => {
+		o.scrollTop = o.scrollHeight
+	};
+
+	//发送
+	let send = () => {
+		let msg = $('#text').val() || '我是打酱油的 ☆';
+		ws.emit("chat", {
+			"msg": msg,
+			"user": '<%= user %>',
+			"time": new Date().toLocaleString() 
+		});
+
+		$('#text').val('');
+	}
+
+	//登录
+	ws.emit('login', { user: '<%= user %>', time: new Date().toLocaleString() });
+
+	//人数
+	ws.on('usernum', (num) => {
+		$('#user-num').text(num);
+	});
+
+	//聊天
+	ws.on('chat', (ret) => {
+		const avatar = ['👱', '👩', '👧', '👶', '👨', '👦', '👵', '👴', '👮', '👲', '👳', '👷', '⛑', '👸', '🤴', '💂', '🕵', '🎅', '🤶', '👼', '👰', '🤵', '🙎']
+		$('#box').append(`<div class="list"><b>${avatar[parseInt(Math.random() * avatar.length + 1)]}【${ret.user}】： </b>⏰<i>${ret.time}</i><br/><p><i>📢 </i>${ret.msg}`);
+
+		scroll(document.querySelector('#box'));
+	});
+
+	//发送
+	document.querySelector('#send').onclick = () => {
+		send();
+	};
+
+	//回车
+	document.addEventListener('keyup', (e) => {
+		let code = e.charCode || e.keyCode;
+		if (13 == code) {
+			send();
+		}
+	}, false);
+</script>
+
+</html>

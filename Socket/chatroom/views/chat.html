@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>聊天室</title>
+		<style>
+			body{ background: -webkit-radial-gradient(green, white); }
+			h1{text-align:center;color:#fff;}
+			.num{margin:auto;width:60%; line-height: 40px; color: white; text-align: right}
+			.num b{ color: yellow;}
+			.box{margin:auto;width:60%;height:520px;border:1px solid #fff;overflow-y:auto;background:#ececec}
+			.btn{ position: fixed; left: 20%; bottom: 0; box-sizing: border-box; margin: auto; padding:10px;width:60%;border:1px solid #fff}
+			.btn .text{width:68%;height:30px; float: left; padding-left: 4px; vertical-align: top;}
+			.btn .send{width:28%;height:36px; float: right; vertical-align: top;}
+			.list{margin:10px auto;padding:4px;width:90%;border:1px solid green;border-radius:3px;color:purple}
+			@media screen and (max-width: 750px){
+				.box{ width:90%; ;height:420px;}
+				.btn{ width:100%; left: 0;}
+			}
+			@keyframes mover{
+				40%{opacity:1;color:#f4f4f4}
+				60%{color:#07a931}
+				80%{color:#ff00b1}
+			}
+			.h1-move{margin:50px auto;width:80%;letter-spacing:2px;font-size:42px;text-align:center;color:#333;text-transform:uppercase}
+			.h1-move i:nth-of-type(2){animation-delay:.05s}
+			.h1-move i:nth-of-type(3){animation-delay:.1s}
+			.h1-move i:nth-of-type(4){animation-delay:.15s}
+			.h1-move i:nth-of-type(5){animation-delay:.2s}
+			.h1-move i{text-shadow:0 1px 10px #fff;font-weight:700;font-style:normal;animation:mover 1s ease-in-out infinite}
+
+
+		</style>
+	</head>
+
+	<body>
+		<h1 class="h1-move"><i>简</i> <i>易</i> <i>聊</i> <i>天</i> <i>室</i></h1>
+
+		<hr><br/>
+		<div class="num">当前在线人数：<b id="user-num">0</b> 位</div>
+		<section class="box" id="box"></section>
+
+		<br/><hr>
+
+		<div class="btn">
+			<input type="text" class="text" id="text" value="" placeholder="请输入聊天内容" /> &nbsp; <input type="button" class="send" id="send" value="发 送" />
+		</div>
+
+	</body>
+
+	<script src="../static/js/jquery.min.js"></script>
+	<script src="http://172.28.125.171:666/socket.io/socket.io.js"></script>
+
+	<script>
+		//对象
+		let ws = io();
+		
+		//底部
+		let scroll = (o) => {
+			o.scrollTop = o.scrollHeight
+		};
+		
+ 		//发送
+		let send = () => {
+			let msg = $('#text').val() || '我是打酱油的 ☆';
+			ws.emit("chat", msg);
+			
+			$('#text').val('');
+		}
+		
+		//登录
+		ws.emit('login', {user: 'mupiao', time: new Date().getTime});
+		
+		//人数
+ 		ws.on('usernum', (num) => {
+			$('#user-num').text(num);
+		});
+
+		//聊天
+		ws.on('chat', (msg) => {
+			$('#box').append('<div class="list">' + msg);
+				
+			scroll(document.querySelector('#box'));
+		});
+
+		//发送
+		document.querySelector('#send').onclick = () => {
+			send();
+		};
+		
+		//回车
+		document.addEventListener('keyup', (e) => {
+			let code = e.charCode || e.keyCode;
+			if(13 == code) {
+				send();
+			}
+		}, false);
+	</script>
+
+</html>
