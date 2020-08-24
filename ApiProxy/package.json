@@ -1,0 +1,21 @@
+{
+  "name": "apiproxy",
+  "version": "1.0.0",
+  "description": "Web项目Api接口代理,解决跨域问题",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "http-proxy",
+    "http-proxy-middleware"
+  ],
+  "author": "沐枫",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^1.0.5",
+    "koa": "^2.13.0"
+  }
+}
