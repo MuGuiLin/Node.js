@@ -21,7 +21,7 @@
     https://www.npmjs.com/package/commander             // 主要模块
     https://www.npmjs.com/package/download-git-repo     // 下载指定项目
     https://www.npmjs.com/package/ora                   // 状态提示
-    https://www.npmjs.com/package/handlebars
+    https://www.npmjs.com/package/handlebars            // 模板库引擎
     https://www.npmjs.com/package/figlet                // 文字放大效果模块
     https://www.npmjs.com/package/clear                 // 清屏
     https://www.npmjs.com/package/chalk                 // 粉笔模块（修饰log函数，如果加颜色等）

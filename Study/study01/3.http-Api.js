@@ -11,12 +11,14 @@ const server = http.createServer((request, response) => {
     response.end('<h1>Hello World -> 你好，世界!</h1>');
 });
 
+// 打印原型链
 function getObjPrototype(obj) {
     let arr = [];
     // getPrototypeOf() 会像拔洋葱一样的一级一级向里面查找原型，赋给obj 然后又...，至到找不到为止。
     while (obj = Object.getPrototypeOf(obj)) {
         arr.push(obj);
     }
+    // 返回给定对象的原型。如果没有继承属性，则返回 null 。
     return arr;
 }
 

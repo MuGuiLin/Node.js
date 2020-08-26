@@ -1,6 +1,8 @@
 /**
  * http://nodejs.cn/api/stream.html
  * 
+ *  是用于与node中流数据交互的接口。
+ * 
  * 流stream 是 Node.js 中处理流式数据的抽象接口。 stream 模块用于构建实现了流接口的对象。
  * 
  * Node.js 提供了多种流对象。 例如，HTTP 服务器的请求和 process.stdout 都是流的实例。
@@ -17,7 +19,7 @@
 
 const fs = require('fs');
 
-// 读取数据的流 (文件流)
+// 读取数据的流 (二进制文件流) 
 const crs = fs.createReadStream('./3.http-demo/img/123.png');
 
 //  console.log(crs);
