@@ -4,7 +4,10 @@
  * 源码地址：https://github.com/koajs/koa/blob/master/lib/context.js
  */
 
-// 通过 getter 和 setter 函数简化
+/**
+ * ctx 上下文对象
+ * 通过 getter 和 setter 函数简化对象的获取和更新
+ */
 module.exports = {
     get url() {
         return this.request.url;
