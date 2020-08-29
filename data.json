@@ -1,0 +1,14 @@
+{
+    "_id": {
+        "$oid": "4asf5fe465s4fe48s3d4f8e",
+        "name": "沐枫",
+        "age": 28,
+        "job": "Web前端"
+    },
+    "_id": {
+        "$oid": "4asf5fe465s4fe48ssd4f88",
+        "name": "沐枫2",
+        "age": 28,
+        "job": "Web前端"
+    }
+}

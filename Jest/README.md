@@ -56,13 +56,17 @@
 
 ```
 
-## 3、运行测试：在index.js文件同级目录中运行如下命令
+## 3、运行测试：
 ```js
-    jest index   // 注，不要加.js 它会自动找到 __tests__/index.spce.ts这个测试文件的！
+    jest ./demo   //语法： jest 测试代码目录
+
+	// 当运行上面命令时，会自动找到demo目录下的index.js这个索引文件，然后再去匹配 __tests__/index.spce.ts这个测试文件，再根据测试用例进行测试！
+
+ 	// 注：如果直接在demo目录中去执行 jest index 或 jest ./index 会把其他目录的测试代码也通通运行一次哦！！
 ```
 
 ## 4、热更新：由于每次修改index.js 或 index.spce.ts文件都要去重启服务，太过麻烦！此时可在运行命令后面 加上 --watch 参数
 ```js
-    jest index --watch
+    jest ./demo --watch
 ```
 

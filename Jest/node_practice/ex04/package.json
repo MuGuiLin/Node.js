@@ -1,0 +1,19 @@
+{
+  "name": "node.js-to-database",
+  "version": "1.0.0",
+  "description": "在 Node.js 使用 MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MySQL",
+    "sequelize"
+  ],
+  "author": "沐枫",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4"
+  }
+}
