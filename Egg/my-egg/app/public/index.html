@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ogg.js</title>
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/mdui.min.css" />
+</head>
+
+<body>
+    <h1>egg.js</h1>
+    <hr />
+
+    <section id="egg-box" class="egg-box">
+        <div class="mdui-typo">
+            <blockquote>
+                <h3><a href="//eggjs.org/zh-cn" target="_blank">Egg.js</a></h3>
+                <p> Egg.js 是一个基于 Koa 的企业级 Node.js 框架 <br>
+                    Egg.js为建造而生 使用Node.js和Koa更好的企业框架和应用程序， Egg 是以 Koa 作为其基础框架，在Koa的模型基础上，进一步对它进行了一些增强。
+                </p>
+                <h3><a href="//www.mdui.org" target="_blank" rel="noopener noreferrer">mdUI</a></h3>
+                <footer><a href="//eggjs.org/zh-cn" target="_blank">https://eggjs.org/zh-cn/</a></footer>
+
+            </blockquote>
+        </div>
+
+        <br>
+
+        <section class="mdui-tab mdui-color-purple" mdui-tab>
+            <a href="#example1-tab1" class="mdui-ripple mdui-ripple-white">
+                <i class="mdui-icon material-icons">&#xe2c9;</i>
+                <label>用户列表</label>
+            </a>
+            <a href="#example1-tab2" class="mdui-ripple mdui-ripple-white">
+                <i class="mdui-icon material-icons">&#xe7fe;</i>
+                <label>添加用户</label>
+            </a>
+            <a href="#example1-tab3" class="mdui-ripple mdui-ripple-white">
+                <i class="mdui-icon material-icons">&#xe63a;</i>
+                <label>微视频</label>
+            </a>
+        </section>
+
+        <section class="example">
+            <div id="example1-tab1" class="mdui-p-a-2">
+                <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-green-accent" @click="getUser">
+                    <i class="mdui-icon material-icons">&#xe84d;</i> 刷新列表
+                </button>
+                <div class="mdui-table-fluid">
+                    <table class="mdui-table mdui-table-selectable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th class="mdui-table-col-numeric" mdui-tooltip="{content: '可以作为登录账号用'}">姓名</th>
+                                <th class="mdui-table-col-numeric">性别</th>
+                                <th class="mdui-table-col-numeric">年龄</th>
+                                <th class="mdui-table-col-numeric">密码</th>
+                                <th class="mdui-table-col-numeric">爱好</th>
+                                <th class="mdui-table-col-numeric" mdui-tooltip="{content: '可以是QQ邮箱'}">邮箱</th>
+                                <th class="mdui-table-col-numeric">简介</th>
+                                <th class="mdui-table-col-numeric">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+   
+                            <tr class="mdui-table-row-selected" v-for="(o, i) in list">
+                                <td>
+                                    <label class="mdui-checkbox">
+                                        <input type="checkbox" :value="o.id"/>
+                                        <i class="mdui-checkbox-icon"></i>
+                                    </label>
+                                </td>
+                                <td>{{o.id}}</td>
+                                <td>{{o.name}}</td>
+                                <td>{{o.sex}}</td>
+                                <td>{{o.age}}</td>
+                                <td>{{o.password}}</td>
+                                <td>{{o.hobby}}</td>
+                                <td>{{o.email}}</td>
+                                <td>{{o.summary}}</td>
+                                <td>
+                                    <button class="mdui-btn mdui-btn-icon mdui-color-red-accent mdui-ripple" @click="delUser(o.id)" >
+                                        <i class="mdui-icon material-icons">&#xe92b;</i>
+                                    </button>
+                                    <button class="mdui-btn mdui-btn-icon mdui-color-blue-accent mdui-ripple">
+                                        <i class="mdui-icon material-icons">&#xe3c9;</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div id="example1-tab2" class="mdui-p-a-2">
+                <form>
+                    <!-- 固定标签 -->
+                    <div class="mdui-textfield">
+                        <i class="mdui-icon material-icons">account_circle</i>
+                        <label class="mdui-textfield-label">姓 名</label>
+                        <input class="mdui-textfield-input" type="text" v-model="user.name" placeholder="沐枫" />
+                        <div class="mdui-textfield-helper">可以填昵称！</div>
+                    </div>
+
+                    <div class="mdui-textfield">
+                        <i class="mdui-icon material-icons">&#xe7fb;</i>
+                        <p class="inline">
+                            <label class="mdui-radio">
+                                <input type="radio" name="sex" value="先生" v-model="user.sex" checked />
+                                <i class="mdui-radio-icon"></i>
+                                先生
+                            </label>
+                            <label class="mdui-radio">
+                                <input type="radio" name="sex" value="女士" v-model="user.sex" />
+                                <i class="mdui-radio-icon"></i>
+                                女士
+                            </label>
+                            <label class="mdui-radio">
+                                <input type="radio" name="sex" value="未知" v-model="user.sex" disabled />
+                                <i class="mdui-radio-icon"></i>
+                                未知
+                            </label>
+                        </p>
+                    </div>
+
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <i class="mdui-icon material-icons" style="bottom: 36px;">&#xe566;</i>
+                        <label class="mdui-textfield-label">年龄</label>
+                        <p class="range">
+                            <label class="mdui-slider mdui-slider-discrete">
+                                <input type="range" step="1" min="0" max="100" v-model="user.age" />
+                            </label>
+                        </p>
+                    </div>
+
+                    <div class="mdui-textfield">
+                        <i class="mdui-icon material-icons">lock</i>
+                        <input class="mdui-textfield-input" type="password" v-model="user.password" placeholder="密码" />
+                    </div>
+
+                    <div class="mdui-textfield">
+                        <i class="mdui-icon material-icons">&#xe87d;</i>
+                        <label class="mdui-textfield-label">爱好</label>
+                        <p class="inline">
+                            <label class="mdui-checkbox">
+                                <input type="checkbox" value="上班" v-model="user.hobby" />
+                                <i class="mdui-checkbox-icon"></i>
+                                上班
+                            </label>
+                            <label class="mdui-checkbox">
+                                <input type="checkbox" value="学习" v-model="user.hobby" checked />
+                                <i class="mdui-checkbox-icon"></i>
+                                学习
+                            </label>
+                            <label class="mdui-checkbox">
+                                <input type="checkbox" value="运动" v-model="user.hobby" />
+                                <i class="mdui-checkbox-icon"></i>
+                                运动
+                            </label>
+                            <label class="mdui-checkbox">
+                                <input type="checkbox" value="旅游" v-model="user.hobby" />
+                                <i class="mdui-checkbox-icon"></i>
+                                旅游
+                            </label>
+                            <label class="mdui-switch">
+                                <input type="checkbox" value="上网" v-model="user.hobby" />
+                                <i class="mdui-switch-icon"></i>
+                                上网
+                            </label>
+                            <label class="mdui-switch">
+                                <input type="checkbox" value="看书" v-model="user.hobby" />
+                                <i class="mdui-switch-icon"></i>
+                                看书
+                            </label>
+                        </p>
+                    </div>
+
+                    <div class="mdui-textfield">
+                        <i class="mdui-icon material-icons">email</i>
+                        <input class="mdui-textfield-input" type="email" v-model="user.email" placeholder="电子邮箱" />
+                    </div>
+
+                    <!-- 浮动标签、多行文本框 -->
+                    <div class="mdui-textfield mdui-textfield-floating-label">
+                        <i class="mdui-icon material-icons">textsms</i>
+                        <label class="mdui-textfield-label">个人简介</label>
+                        <textarea class="mdui-textfield-input" v-model="user.summary"></textarea>
+                    </div>
+
+
+                    <!-- 禁用状态 -->
+                    <!-- <div class="mdui-textfield">
+                    <i class="mdui-icon material-icons">lock</i>
+                    <input class="mdui-textfield-input" type="text" placeholder="Disabled" disabled />
+                </div> -->
+
+                    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-blue-accent" @click="addUser"
+                        type="button"><i class="mdui-icon material-icons">add</i> 添加用户</button>
+
+                </form>
+            </div>
+
+            <div id="example1-tab3" class="mdui-p-a-2">
+                <div class="mdui-video-container">
+                    <iframe height=498 width=510 src="//player.youku.com/embed/XNzUwOTk5MzE2" frameborder=0
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+    </section>
+
+    <script src="./js/vue.js"></script>
+    <script src="./js/axios.min.js"></script>
+    <script src="./js/mdui.min.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#egg-box',
+            data: {
+                list: [],
+                token: {},
+                user: {
+                    name: '',
+                    sex: '先生',
+                    age: 12,
+                    password: '',
+                    hobby: ['学习', '看书'],
+                    email: '',
+                    summary: ''
+                }
+            },
+            mounted() {
+                this.getUser();
+            },
+            methods: {
+                
+                async getUser() {
+                    const res = await axios.get('/getAllUser');
+                    this.list = res.data;
+
+                    console.log(this.list);
+                },
+
+                async addUser() {
+
+                    console.log(this.user);
+                    // await axios.post('/addUser', {
+                    //     name: '',
+                    //     sex: '先生',
+                    //     age: 12,
+                    //     password: '',
+                    //     hobby: ['学习', '看书'],
+                    //     email: '',
+                    //     summary: ''
+                    // });
+
+                    axios({
+                        method: 'get',
+                        url: '/addUser',
+                        params: {
+                            name: this.user.name,
+                            sex: this.user.sex,
+                            age: this.user.age,
+                            password: this.user.password,
+                            hobby: this.user.hobby.join(','),
+                            email: this.user.email,
+                            summary: this.user.summary
+                        }
+                        // responseType: 'stream'
+                    }).then((res) => {
+                        console.log(res);
+                        if (1 == res.data.code) {
+                            alert('添加成功！');
+                        }
+
+                    }).catch((error) => {
+                        console.log(error);
+
+                    }).then(() => {
+                        // always executed
+
+                    });
+                },
+
+                async delUser(id) {
+                    axios({
+                        method: 'get',
+                        url: '/delUser',
+                        params: {
+                            id: id
+                        }
+                    }).then((res) => {
+                        console.log(res);
+                        if (1 == res.data.code) {
+                            alert('删除成功！');
+                        }
+                    }).catch((error) => {
+                        console.log(error);
+
+                    }).then(() => {
+                        // always executed
+                    });
+                },
+
+
+            }
+
+        });
+    </script>
+</body>
+
+</html>

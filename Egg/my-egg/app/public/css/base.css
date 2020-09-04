@@ -1,0 +1,29 @@
+h1 {
+    text-align: center;
+}
+
+.egg-box {
+    margin: 30px auto;
+    padding: 30px;
+    width: 1200px;
+    min-height: 100vh;
+    border: 1px solid gray;
+}
+
+.example {
+    background: #eee;
+}
+
+.inline {
+    display: inline;
+    padding-left: 52px;
+}
+
+.inline label {
+    margin-right: 30px;
+}
+
+.range{
+    display: inherit;
+    padding-left: 52px;
+}
