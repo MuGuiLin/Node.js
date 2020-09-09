@@ -214,3 +214,57 @@ module.exports = app => {
 
 ```
 
+
+
+## API接口文档 工具 Swagger
+
+> Swagger 是⼀个规范和完整的框架，⽤于⽣成、描述、调⽤和可视化 RESTful ⻛格的 Web 服务。
+>
+> Npn地址：[https://www.npmjs.com/package/egg-swagger-doc-feat](https://www.npmjs.com/package/egg-swagger-doc-feat)
+>
+> # egg-swagger-doc-feat
+>
+> 应用于eggjs的plugin,可自动生成SwaggerUI。应用启动后访问/swaagger-ui.html可以浏览页面，访问/swagger-doc,获取swaggerjson
+
+使用方法: [https://www.nodenpm.com/egg-swagger-doc-feat/package.html](https://www.nodenpm.com/egg-swagger-doc-feat/package.html)
+
+```shell
+// 安装
+npm i egg-swagger-doc-feat --save
+```
+
+```js
+//注册swagger插件 config/plugin.js
+module.exports = {
+  swaggerdoc: {
+    enable: true,
+    package: 'egg-swagger-doc-feat',
+  }
+};
+```
+
+```js
+// 配置swagger信息 config/config.default.js
+config.swaggerdoc = {
+    dirScanner: './app/controller',
+    apiInfo: {
+        title: '我的API接⼝文档',
+        description: 'swagger-ui for egg',
+        version: '1.0.0',
+    },
+    schemes: ['http', 'https'],
+    consumes: ['application/json'],
+    produces: ['application/json'],
+    enableSecurity: false,
+    // enableValidate: true,
+    routerMap: true,
+    enable: true,
+}
+```
+
+**API文档查看地址**：
+
+[http://localhost:7001/swagger-doc](http://localhost:7001/swagger-doc)
+
+[http://localhost:7001/swagger-ui.html](http://localhost:7001/swagger-ui.html)
+

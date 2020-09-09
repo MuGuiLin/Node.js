@@ -1,1 +1,1 @@
-module.exports = config => () => `funcB run config is ${config}`
+module.exports = config => () => `funcB run config is ${config}`;

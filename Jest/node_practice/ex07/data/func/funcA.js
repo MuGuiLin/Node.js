@@ -1,1 +1,1 @@
-module.exports = config => () => `funcA run`
+module.exports = config => () => `funcA run`;
