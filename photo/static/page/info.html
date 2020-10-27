@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>图片详情</title>
+</head>
+
+<body>
+    <link rel="stylesheet" type="text/css" href="./css/info.css">
+    <script src="./js/info.js"></script>
+    </head>
+
+    <body>
+        <div id="diapoContainer">
+            <% for(var i = 0; i < imgArr.length; i++) { %>
+                <img class="imgsrc" alt="图02说明" src="./img/info/a02.jpg" />
+                <img class="imgsrc" alt="图0<%= i %>说明" src="<%= imgArr[i] %>" />
+                <!-- <img class="imgsrc" alt="图02说明" src="./img/info/a02.jpg" />
+                <img class="imgsrc" alt="图03说明" src="./img/info/a03.jpg" />
+                <img class="imgsrc" alt="图04说明" src="./img/info/a04.jpg" />
+                <img class="imgsrc" alt="图05说明" src="./img/info/a05.jpg" />
+                <img class="imgsrc" alt="图06说明" src="./img/info/a06.jpg" />
+                <img class="imgsrc" alt="图07说明" src="./img/info/a07.jpg" />
+                <img class="imgsrc" alt="图08说明" src="./img/info/a08.jpg" />
+                <img class="imgsrc" alt="图09说明" src="./img/info/a09.jpg" />
+                <img class="imgsrc" alt="图10说明" src="./img/info/a10.jpg" />
+                <img class="imgsrc" alt="图11说明" src="./img/info/a11.jpg" />
+                <img class="imgsrc" alt="图12说明" src="./img/info/a12.jpg" />
+                <img class="imgsrc" alt="图13说明" src="./img/info/a13.jpg" />
+                <img class="imgsrc" alt="图14说明" src="./img/info/a14.jpg" />
+                <img class="imgsrc" alt="图15说明" src="./img/info/a15.jpg" />
+                <img class="imgsrc" alt="图16说明" src="./img/info/a16.jpg" />
+                <img class="imgsrc" alt="图17说明" src="./img/info/a17.jpg" />
+                <img class="imgsrc" alt="图18说明" src="./img/info/a18.jpg" />
+                <img class="imgsrc" alt="图19说明" src="./img/info/a19.jpg" />
+                <img class="imgsrc" alt="图20说明" src="./img/info/a20.jpg" />
+                <img class="imgsrc" alt="图21说明" src="./img/info/a21.jpg" />
+                <img class="imgsrc" alt="图22说明" src="./img/info/a22.jpg" />
+                <img class="imgsrc" alt="图23说明" src="./img/info/a23.jpg" />
+                <img class="imgsrc" alt="图24说明" src="./img/info/a24.jpg" /> -->
+            <% } %>
+            <div id="bkgcaption"></div>
+            <div id="caption"></div>
+        </div>
+    </body>
+
+</html>

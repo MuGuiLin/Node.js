@@ -1,0 +1,47 @@
+doctype
+html
+    head
+        title 相册集
+        meta(charset="utf-8")
+        meta(http-equiv="X-UA-Compatible" content="IE=edge")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        style.
+            h1 {
+                text-align: center;
+            }
+            .box{
+                width: 68%; margin: auto; padding: 20px; border: 1px solid gray;
+            }
+            .box::after{content: ''; display: block; clear: both;}
+            .list {
+                position: relative;
+                margin: 30px; float: left; width: 218px; padding: 10px 20px; text-align: center; transition: all .3s;  border: 1px solid transparent;
+            }
+            .list:hover{ border: 1px solid #71AE35; border-radius: 10px; cursor: pointer;}
+            .list i{ position: absolute; top: 2px; right: 2px; display: block; margin: auto; width: 30px; height: 30px; line-height: 30px; font-style: normal; font-size: 16px; text-align: center; color: white; background: #ff0098; border-radius: 50%;}
+            .list img{ display: block; margin: auto; width: 100%; height: 180px; border-bottom: 1px solid #71AE35;   }
+            .list b{ line-height: 50px; font-size: 18px; color: #71AE35;}
+    body
+        h1 相册集
+        a(href="/admin") 后台管理
+        hr
+        br
+        .box
+            - for(var i = 0; i < boxArr.length; i++) 
+                .list
+                    i.deldir(data-path="#{boxArr[i]}") x
+                    a(href="#{boxArr[i]}")
+                        img(src="./img/f-icon.jpg" alt="")
+                        b #{boxArr[i]}
+
+    script(src="/js/jquery.min.js")
+    script.
+        $(document.body).on('click', '.deldir', function() {
+            let $this = $(this);
+            $.get('/deldir/'+ $this.attr('data-path'), function(o){
+                if(1 === o.code) {
+                    $this.parents('.list').remove();
+                }
+            });
+        });
+  

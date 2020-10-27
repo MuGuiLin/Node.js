@@ -1,0 +1,19 @@
+doctype
+html(lang="en")
+
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        title 图片详情
+        link(rel="stylesheet" type="text/css" href="/css/info.css")
+        script(src="/js/info.js")
+    
+    body
+        #diapoContainer
+            - for(var i = 0; i < imgArr.length; i++)
+                img.imgsrc(alt="图#{ imgArr[i] }说明" src="#{ imgArr[i] }")
+                #bkgcaption
+                #caption
+
+

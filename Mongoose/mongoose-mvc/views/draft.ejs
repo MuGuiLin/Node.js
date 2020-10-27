@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table{ width: 100%; border: 1px solid gray; text-align: center;}
+        table th, td{ border: 1px solid gray;}
+        table td img{ width: 200px;}
+        table td button{ width: 100px; height: 30px; }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>撰稿人</th>
+                <th>标题图片</th>
+                <th>稿件标题</th>
+                <th>所有状态</th>
+                <th>时 间</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(let i = 0; i < data.length; i++) { %>
+            <tr>
+                <td><%= data[i].name %></td>
+                <td><img src="<%= data[i].cover %>" alt=""></td>
+                <td><%= data[i].title %></td>
+                <td><button><%= data[i].step %></button></td>
+                <td><%= data[i].time %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

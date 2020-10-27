@@ -1,0 +1,21 @@
+{
+  "name": "websocket",
+  "version": "1.0.0",
+  "description": "WebSocket服务器",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ws",
+    "WebSocket"
+  ],
+  "author": "沐枫自然",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "weixin-js-sdk": "^1.4.0-test",
+    "ws": "^6.1.0"
+  }
+}

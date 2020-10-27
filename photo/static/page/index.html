@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .box{
+            width: 68%; margin: auto; padding: 20px; border: 1px solid gray;
+        }
+        .box::after{content: ''; display: block; clear: both;}
+        .list {
+            margin: 30px; float: left; width: 218px; padding: 10px 20px; text-align: center; transition: all .3s;  border: 1px solid transparent;
+        }
+        .list:hover{ border: 1px solid #71AE35; border-radius: 10px; cursor: pointer;}
+        .list i{ display: block; margin: auto; width: 100%; height: 200px; border-bottom: 1px solid #71AE35;  background: url(./img/f-icon.jpg) center center no-repeat; background-size: contain; }
+        .list b{ line-height: 50px; font-size: 18px; color: #71AE35;}
+    </style>
+</head>
+
+<body>
+    <h1>相册集</h1>
+    <a href="/admin">后台管理</a>
+    <hr>
+    <br>
+    <section class="box">
+        <% for(var i = 0; i < fname.length; i++) { %>
+            <!-- <a href="/info?name=<%= fname[i] %>"> -->
+            <a href="/info">
+                <div class="list">
+                    <i></i>
+                    <b><%= fname[i] %></b>
+                </div>
+            </a>
+         <% } %>
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聊天室登录</title>
+    <style>
+        *{ margin: 0; padding: 0;}
+        html, body{ width: 100%; height: 100%;}
+        body{ position: relative; background: rgba(0, 0, 0, 0.5);}
+        form{ position: absolute; top: 50%; left: 50%; margin-top: -150px; margin-left: -110px; padding: 20px;  width: 300px; border: 1px solid green; border-radius: 8px; background: white; }
+        p, input, button{ font-size: 18px; height: 32px;}
+        p{ line-height: 50px; height: 50px; text-align: center; }
+        button{ width: 120px;  }
+        .msg{ color: red;}
+    </style>
+</head>
+<body>
+    <form action="" method="post">
+        <p>昵称：<input type="text" id="nickname" value="" ></p>
+        <p class="msg" id="msg"></p>
+        <p><button type="button" id="open">进入聊天室</button></p>
+    </form>
+</body>
+<script src="js/jquery.min.js"></script>
+<script>
+    let SaveNickName = (nick) => {
+        $.post('/check', { name: nick}, function(o) {
+            if(1 == o.status) {
+                window.location.href = '/chat';
+            } else {
+                $('#msg').text(o.result);
+                window.setTimeout( () => {
+                    $('#msg').text('');
+                }, 3000);
+            }
+        });
+    };
+
+    $(document.body).on('click', '#open', function() {
+        let nick = $('#nickname').val();
+        if(nick) {
+            SaveNickName(nick);
+        } else {
+            alert('请输入昵称！');
+        }
+    });
+</script>
+</html>

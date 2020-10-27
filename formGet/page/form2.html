@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FormGET2</title>
+    <style>
+        form{ padding: 100px; margin: auto; width: 30%;  border: 1px solid #dedede; border-radius: 10px; }
+        input[type="submit"]{ width: 100px;}
+    </style>
+</head>
+<body>
+    <form action="http://127.0.0.1:1000/" method="get">
+        <h1>学号查询</h1>
+        
+        <h3>老师查询：</h3>
+        姓名：
+        <input type="text" name="teachar" value="teachar"><br/>
+
+        工号：
+        <input type="number" name="number1" maxlength="6" placeholder="请输入6位工号"><br/><br/>
+
+        <h3>学生查询：</h3>
+        姓名：
+        <input type="text" name="student" value="student"><br/>
+
+        学号：
+        <input type="number" name="number2" maxlength="10" placeholder="请输入10位学习号"><br/><br/>
+
+        <input type="submit">
+    </form>
+</body>
+</html>
