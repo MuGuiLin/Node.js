@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {{include './components/header.html' header}}
+    <ul>
+      {{each list}}
+      <li>{{$index}} -> {{$value.username}}</li>
+      <li>{{$index}} -> {{$value.email}}</li>
+      <li>{{$index}} -> {{$value.phone}}</li>
+      <br/>
+      {{/each}}
+
+      <hr />
+      
+      <% for(var i = 0; i < list.length; i++){ %>
+      <li><%= i %> -> <%= list[i].username%></li>
+      <li><%= i %> -> <%= list[i].email%></li>
+      <li><%= i %> -> <%= list[i].phone%></li>
+      <br/>
+      <% } %>
+    </ul>
+    <% include('./components/footer.html', list) %>
+  </body>
+
+  <script>
+    // ES7 async await
+    const getData = async () => {
+      return "123456";
+    };
+
+    // ES6 Promise
+    const getData2 = () => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("admin");
+        }, 1000);
+      });
+    };
+
+    async function run() {
+      let data = await getData();
+      let data2 = await getData2();
+      console.log(data, data2);
+      return data;
+    }
+
+    console.log(run());
+  </script>
+</html>

@@ -1,0 +1,26 @@
+{
+    "development": {
+        "host": "mongodb://localhost:27017/",
+        "dialect": "mongodb",
+        "username": "root",
+        "password": "",
+        "database": "myweb",
+        "timezone": "+08:00"
+    },
+    "test": {
+        "host": "mongodb://localhost:27017/",
+        "dialect": "mongodb",
+        "username": "root",
+        "password": "",
+        "database": "myweb_test",
+        "timezone": "+08:00"
+    },
+    "production": {
+        "host": "mongodb://localhost:27017/",
+        "dialect": "mongodb",
+        "username": "root",
+        "password": "",
+        "database": "myweb_production",
+        "timezone": "+08:00"
+    }
+}

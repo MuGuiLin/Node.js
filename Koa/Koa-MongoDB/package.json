@@ -1,0 +1,24 @@
+{
+  "name": "koa-mongodb",
+  "version": "1.0.0",
+  "description": "Koa2 + MongoDB4.4",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Koa2",
+    "MongoDB4.4"
+  ],
+  "author": "沐枫",
+  "license": "ISC",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "koa": "^2.13.0",
+    "koa-art-template": "^1.1.1",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.0.0",
+    "koa-static": "^5.0.0",
+    "mongodb": "^3.6.3"
+  }
+}
