@@ -5,21 +5,21 @@
 
 const MongoClient = require('mongodb').MongoClient;
 
-const Config = require('../config/data-base.json');
-
+const { database } = require('../config/index');
 class Db {
 
-    static dataBase() {
+    static dataBase(opts) {
         // 单例模式：多实例共享（只实例化类1次）也就是只连接1次数据库，第2次实例化时直接返回之前实例化好的实例对象，从而解决多次连接数据库问题！
-        if (!Db.isInit) {
-            Db.isInit = new Db();
+        if (!Db.isInit || opts) {
+            Db.isInit = new Db(opts);
         }
         // else{return Db.isInit;} 注：这里不能用 else{} 因为不会走else！！
         return Db.isInit;
     };
 
-    constructor() {
+    constructor(opts) {
         this.client = null;
+        this.config = { ...database, ...opts };
         this.connect();
     };
 
@@ -28,12 +28,13 @@ class Db {
             if (this.client) {
                 resolve(this.client);
             } else {
-                MongoClient.connect(Config.development.host, (error, client) => {
+                MongoClient.connect(this.config.host, (error, client) => {
                     if (error) {
                         reject(error);
                         console.log("数据库连接失败！", error);
                     } else {
-                        this.client = client.db(Config.development.database);
+                        // 保存数据库连接对象，方像第2次调用时，直接返回使用
+                        this.client = client.db(this.config.database);
                         resolve(this.client);
                     }
                 });
@@ -41,10 +42,10 @@ class Db {
         });
     };
 
-    find(collectionName, json) {
+    find(collectionName, json, data) {
         return new Promise((resolve, reject) => {
             this.connect().then((db) => {
-                const result = db.collection(collectionName).find(json);
+                const result = db.collection(collectionName).find(json, data);
                 result.toArray((err, docs) => {
                     if (err) {
                         reject(err);
@@ -58,16 +59,88 @@ class Db {
         });
     };
 
-    update() {
-
+    update(collectionName, json, data) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).update(json, { $set: data }, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
     };
 
-    insert() {
-
+    updateOne(collectionName, json, data) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).updateOne(json, { $set: data }, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
     };
 
-    delete() {
+    insert(collectionName, json) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).insert(json, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
+    };
 
+    insertOne(collectionName, json) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).insertOne(json, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
+    };
+
+    removeOne(collectionName, json) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).removeOne(json, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
+    };
+
+    removeOne(collectionName, json) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                db.collection(collectionName).removeOne(json, (error, result) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+        });
     };
 };
 
@@ -75,7 +148,6 @@ module.exports = Db.dataBase();
 
 
 return false;
-
 
 
 /**

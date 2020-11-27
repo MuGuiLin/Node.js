@@ -22,20 +22,7 @@ module.exports = KoaRouter
         ctx.body = '登录接口';
     })
 
-    .get(Api + '/add', async (ctx, next) => {
-        let data = {
-            "username": "小明",
-            "password": "666",
-            "sex": 1,
-            "age": 28,
-            "email": "muguilin@foxmail.com",
-            "phone": "13558793025",
-            "hobbys": [1, 2, 3]
-        };
-        ctx.body = await db.users.add(data);
-    })
-
-    .get('/select', async (ctx, next) => {
+    .get(Api + '/select', async (ctx, next) => {
         // ctx.body = ('666')
 
         ctx.body = await db.find('users', {});
@@ -63,6 +50,25 @@ module.exports = KoaRouter
         console.log('接收到的参数：', ctx.params);
 
         ctx.body = ctx.params;
+    })
+
+    .post(Api + '/addUser', async (ctx, next) => {
+        let data = {
+            "username": "小明",
+            "password": "666",
+            "sex": 1,
+            "age": 28,
+            "email": "muguilin@foxmail.com",
+            "phone": "13558793025",
+            "hobbys": [1, 2, 3]
+        };
+        data = ctx.request.body;
+        const { result } = await db.insert('users', data);
+        // const { result } = await db.insertOne('users', data);
+        if (result.ok) {
+            // KoaRouter.redirect('/addUser');
+        }
+        ctx.body = result;
     })
 
     .post(Api + '/update', async (ctx, next) => {
@@ -96,11 +102,12 @@ module.exports = KoaRouter
 
 
 
+
+
+    /*--------------- 页面视图 ---------------*/
+
+    // 首页
     .get('/', async (ctx, next) => {
-
-        console.log(path.join(__dirname, 'uploads'));
-        console.log(path.resolve(__dirname, '/uploads'));
-
         const data = {
             name: '沐枫',
             list: ['HTML5', 'CSS3', 'ES6', 'Node.js', 'Vue', 'React', 'Angular']
@@ -118,8 +125,31 @@ module.exports = KoaRouter
     // 关于页
     .get('/about', async (ctx, next) => {
         const data = {
-            list: await db.find('users', {})
+            name: '沐枫',
+            list: ['HTML5', 'CSS3', 'ES6', 'Node.js', 'Vue', 'React', 'Angular']
         }
         await ctx.render('about', data);
+    })
+
+    // 用户列表
+    .get('/users', async (ctx, next) => {
+        const data = {
+            list: await db.find('users', {})
+        }
+        console.log(data);
+        await ctx.render('users', data);
+    })
+
+    // 新增用户
+    .get('/addUser', async (ctx, next) => {
+        await ctx.render('addUser');
+    })
+
+    // 编辑用户
+    .get('/editUser/:id', async (ctx, next) => {
+        const { id } = ctx.params;
+        const data =   await db.find('users', { username: id })
+        console.log(data[0]);
+        await ctx.render('editUser', data[0]);
     })
 

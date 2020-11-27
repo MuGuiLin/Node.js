@@ -1,15 +1,16 @@
 const Koa = require('koa'),
     path = require('path'),
     router = require('./router/api-router'),
+    config = require('./config/index'),
     KoaBody = require('koa-body'),
     KoaStatic = require('koa-static'),
     KoaRender = require('koa-art-template');
 
-const server = new Koa()
+const server = new Koa();
 
 // HTML模板引擎配置
 KoaRender(server, ({
-    root: path.join(__dirname, 'views'),
+    root: config.template.root,
     extname: '.html', //.art
     debug: process.env.NODE_ENV !== 'production'
 }));
@@ -31,8 +32,8 @@ KoaRender(server, ({
 
             /**
              * Koa执行流程 => 洋葱模型
-             *              Request 请求时从外向里！
-             *              Response 响应时从里向外！
+             *            Request 请求时从外向里！
+             *            Response 响应时从里向外！
              */
         })
 
@@ -43,23 +44,23 @@ KoaRender(server, ({
             formidable: {
                 maxFields: 100,                 // 上传最大文件个数（整数）
                 maxFieldsSize: 2 * 1024 * 1024,              // 上传最大文件大小（整数） 1MB = (1 * 1024 * 1024)
-                uploadDir: path.join(__dirname, 'uploads'),  // 文件上传目录,默认os.tmpDir(),
+                uploadDir: config.storage.dir,  // 文件上传目录,默认os.tmpDir(), path.join(__dirname, 'uploads')
                 keepExtensions: true,           // 开启文件写入uploadDir包括原始文件的扩展名, 默认false
                 hash: 'md5',                    // 如果你想计算校验和传入的文件, 设置这个要么'sha1'或'md5'、默认false
                 multiples: true,                // 开启多文件上传
-                onFileBegin: (name, file) => {   //文件上传前的设置
+                onFileBegin: (name, file) => {  //文件上传前的设置
                     // console.log(name, file);
                 }
             }
         }))
 
         // 注册静态资源代理
-        .use(KoaStatic(__dirname + '/public'))
+        .use(KoaStatic(config.storage.static))
         // .use(KoaStatic({
-        //     dir: path.join(__dirname, '/static'),   // 静态资源存储路径
-        //     prefix: '/',                            // 静态资源访问前缀(名字自定义，前面一定要加/)
-        //     gzip: true,                             // 是否启用压缩
-        //     dynamic: true                           // 是否启用缓存 
+        //     dir: config.storage.static,         // 静态资源存储路径 path.join(__dirname, '/static')
+        //     prefix: '/',                        // 静态资源访问前缀(名字自定义，前面一定要加/)
+        //     gzip: true,                         // 是否启用压缩
+        //     dynamic: true                       // 是否启用缓存 
         // }))
 
         // 注册并启动路由
@@ -68,8 +69,8 @@ KoaRender(server, ({
         .use(router.allowedMethods())
 
         // 启动监听
-        .listen(3000, '127.0.0.1', () => {
-            console.log('3000端口已启动！');
+        .listen(config.server.port, config.server.host, () => {
+            console.log(`服务启动成功：http://${config.server.host}:${config.server.port}`);
         });
-})();
 
+})();

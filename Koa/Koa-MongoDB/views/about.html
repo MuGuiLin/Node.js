@@ -3,27 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>关于</title>
   </head>
   <body>
     {{include './components/header.html' header}}
-    <ul>
-      {{each list}}
-      <li>{{$index}} -> {{$value.username}}</li>
-      <li>{{$index}} -> {{$value.email}}</li>
-      <li>{{$index}} -> {{$value.phone}}</li>
-      <br/>
-      {{/each}}
-
-      <hr />
-      
-      <% for(var i = 0; i < list.length; i++){ %>
-      <li><%= i %> -> <%= list[i].username%></li>
-      <li><%= i %> -> <%= list[i].email%></li>
-      <li><%= i %> -> <%= list[i].phone%></li>
-      <br/>
-      <% } %>
-    </ul>
+    <h1>关于</h1>
+    <hr />
     <% include('./components/footer.html', list) %>
   </body>
 

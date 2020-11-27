@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>编辑用户</title>
+    <style>
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin: 50px auto;
+        padding: 30px;
+        width: 800px;
+        border-radius: 8px;
+        border: 1px solid gray;
+      }
+      button {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>编辑用户</h1>
+    <hr />
+    <form
+      action="/api/addUser"
+      method="post"
+      enctype="multipart/form-data"
+      onsubmit="return submitFn()"
+    >
+      <p>
+        昵称：<input type="text" name="username" value="{{username}}" required />
+      </p>
+      <p>密码：<input type="password" name="password" value="{{password}}" /></p>
+      <p>
+        性别：<label><input type="radio" name="sex" value="1" /> 先生</label>
+        <label><input type="radio" name="sex" value="2" /> 女士</label>
+        <label><input type="radio" checked name="sex" value="0" /> 保密</label>
+      </p>
+      <p>年龄：<input type="month" name="age" value="{{age}}" /></p>
+      <p>电话：<input type="tel" name="phone" value="{{phone}}" required /></p>
+      <p>邮箱：<input type="email" name="email" value="{{email}}" /></p>
+      <p>
+        爱好：<label><input type="checkbox" name="hobbys" value="1" /> 学习</label>
+        <label><input type="checkbox" checked name="hobbys" value="2" /> 打球</label>
+        <label><input type="checkbox" name="hobbys" value="3" /> 看书</label>
+        <label><input type="checkbox" name="hobbys" value="4" /> 旅游</label>
+      </p>
+      <p>
+        <button type="reset">重 置</button> <button type="submit">提 交</button>
+      </p>
+    </form>
+
+    <script src="/js/jquery.js"></script>
+    <script>
+      function submitFn() {
+        console.log($("form").serializeArray());
+      }
+      console.log($);
+    </script>
+  </body>
+</html>

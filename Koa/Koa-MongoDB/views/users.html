@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>用户列表</title>
+    <style>
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin: 50px auto;
+        padding: 30px;
+        width: 800px;
+        border-radius: 8px;
+        border: 1px solid gray;
+      }
+      button {
+        font-size: 18px;
+      }
+      table {
+        margin: auto;
+        width: 1200px;
+        text-align: center;
+        border: 1px solid gray;
+      }
+      table tr th,
+      table tr td {
+        line-height: 36px;
+        border: 1px solid gray;
+      }
+    </style>
+  </head>
+  <body>
+    {{include './components/header.html' header}}
+    <h1>用户列表</h1>
+    <hr />
+    <section>
+      <table>
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>ID</th>
+            <th>昵称</th>
+            <th>性别</th>
+            <th>年龄</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>爱好</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{each list}}
+          <tr>
+            <td>{{$index}}</td>
+            <td>{{$value._id}}</td>
+            <td>{{$value.username}}</td>
+            <td>{{$value.sex}}</td>
+            <td>{{$value.age}}</td>
+            <td>{{$value.phone}}</td>
+            <td>{{$value.email}}</td>
+            <td>{{$value.hobbys}}</td>
+            <td>
+              <button data-id="{{$value.username}}" class="edit-user">编辑</button>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+
+        <tfoot></tfoot>
+      </table>
+    </section>
+
+    <script src="/js/jquery.js"></script>
+    <script>
+      $(document.body).on("click", ".edit-user", function (e) {
+        window.location.href = `/editUser/${$(this).attr("data-id")}`;
+      });
+    </script>
+  </body>
+</html>
