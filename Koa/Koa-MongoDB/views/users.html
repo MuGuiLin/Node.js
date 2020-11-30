@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>用户列表</title>
+    {{include './components/mate.html' '用户列表'}}
+
     <style>
       h1 {
         text-align: center;
@@ -35,52 +34,57 @@
     {{include './components/header.html' header}}
     <h1>用户列表</h1>
     <hr />
-    <section>
-      <table>
-        <caption align="left">
-          <a href="/addUser">
-            <button>新增用户</button>
-          </a>
-        </caption>
-        <thead>
-          <tr>
-            <th>序号</th>
-            <th>ID</th>
-            <th>昵称</th>
-            <th>性别</th>
-            <th>年龄</th>
-            <th>电话</th>
-            <th>邮箱</th>
-            <th>爱好</th>
-            <th>操作</th>
-          </tr>
-        </thead>
+    <section class="container">  
+      <div class="row text-right">
+        <a href="/addUser" class="btn btn-success btn-lg ">新增用户</a>
+      </div>
+      <br>
+      <div class="row">
+        <table  class="table table-bordered table-striped table-hover">
+          <thead class="thead-light">
+            <tr class="bg-primary">
+              <th scope="col">序号</th>
+              <th scope="col">ID</th>
+              <th scope="col">昵称</th>
+              <th scope="col">性别</th>
+              <th scope="col">年龄</th>
+              <th scope="col">电话</th>
+              <th scope="col">邮箱</th>
+              <th scope="col">爱好</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          {{each list}}
-          <tr>
-            <td>{{$index}}</td>
-            <td>{{$value._id}}</td>
-            <td>{{$value.username}}</td>
-            <td>{{$value.sex}}</td>
-            <td>{{$value.age}}</td>
-            <td>{{$value.phone}}</td>
-            <td>{{$value.email}}</td>
-            <td>{{$value.hobbys}}</td>
-            <td>
-              <button data-id="{{@$value._id}}" class="edit-user">
-                编辑
-              </button>
-              <button data-id="{{$value.username}}" class="del-user">
-                删除
-              </button>
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
+          <tbody>
+            {{each list}}
+            <tr>
+              <td scope="row">{{$index}}</td>
+              <td>{{@$value._id}}</td>
+              <td>{{$value.username}}</td>
+              <td>{{$value.sex}}</td>
+              <td>{{$value.age}}</td>
+              <td>{{$value.phone}}</td>
+              <td>{{$value.email}}</td>
+              <td>{{$value.hobbys}}</td>
+              <td>
+                <button data-id="{{@$value._id}}" class="btn btn-primary edit-user">
+                  编辑
+                </button>
+                <button data-id="{{@$value._id}}" class="btn btn-danger del-user">
+                  删除
+                </button>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
 
-        <tfoot></tfoot>
-      </table>
+          <tfoot>  
+            <tr>
+              <td colspan="9">tfoot</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
     </section>
 
     <script src="/js/jquery.js"></script>
@@ -90,7 +94,7 @@
       });
 
       $(document.body).on("click", ".del-user", function (e) {
-        if (window.confirm("是否确认")) {
+        if (window.confirm("是否确认删除？")) {
           window.location.href = `api/delUser/${$(this).attr("data-id").replace(/\"/g, "")}`;
         }
       });
