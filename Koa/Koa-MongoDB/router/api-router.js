@@ -52,6 +52,7 @@ module.exports = KoaRouter
         ctx.body = ctx.params;
     })
 
+    // 新增用户
     .post(Api + '/addUser', async (ctx, next) => {
         let data = {
             "username": "小明",
@@ -66,9 +67,33 @@ module.exports = KoaRouter
         const { result } = await db.insert('users', data);
         // const { result } = await db.insertOne('users', data);
         if (result.ok) {
-            // KoaRouter.redirect('/addUser');
+            ctx.body = result;
+            ctx.redirect('/users');
         }
-        ctx.body = result;
+
+    })
+
+    // 编辑用户
+    .post(Api + '/editUser', async (ctx, next) => {
+        const data = ctx.request.body;
+        const _id = data._id;
+        delete data._id;
+        const { result } = await db.updateOne('users', { _id: db.ObjectId(_id) }, data);
+        try {
+            if (result.ok) {
+                ctx.redirect('/users');
+            }
+        } catch (error) {
+            ctx.body = error;
+        }
+    })
+
+    // 删除用户
+    .get(Api + '/delUser/:id', async (ctx, next) => {
+        const { id } = ctx.params;
+        // const id = ctx.query.id; // <form  action="/api/editUser"  method="get"
+        const { result } = await db.removeOne('users', { _id: db.ObjectId(id) });
+        result.ok && ctx.redirect('/users');
     })
 
     .post(Api + '/update', async (ctx, next) => {
@@ -145,11 +170,10 @@ module.exports = KoaRouter
         await ctx.render('addUser');
     })
 
-    // 编辑用户
-    .get('/editUser/:id', async (ctx, next) => {
+    // 编辑用户(详情)
+    .get('/userInfo/:id', async (ctx, next) => {
         const { id } = ctx.params;
-        const data =   await db.find('users', { username: id })
-        console.log(data[0]);
+        const data = await db.find('users', { _id: db.ObjectId(id) });
         await ctx.render('editUser', data[0]);
     })
 

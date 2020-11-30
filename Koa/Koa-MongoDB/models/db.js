@@ -2,8 +2,9 @@
  * mongodb 模块是 MongoDB官方提供的在Node.js中操作mongodb数据库的第三方模块
  * http://mongodb.github.io/node-mongodb-native/3.6/quick-start/quick-start/
  */
-
-const MongoClient = require('mongodb').MongoClient;
+const MongoDB = require('mongodb');
+const MongoClient = MongoDB.MongoClient;
+const ObjectID = MongoDB.ObjectID;
 
 const { database } = require('../config/index');
 class Db {
@@ -42,10 +43,31 @@ class Db {
         });
     };
 
-    find(collectionName, json, data) {
+    ObjectId(_id) {
+        return new ObjectID(_id);
+    }
+
+    find(collectionName, json, data = {}) {
         return new Promise((resolve, reject) => {
             this.connect().then((db) => {
                 const result = db.collection(collectionName).find(json, data);
+                result.toArray((err, docs) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(docs);
+                    }
+                });
+            }).catch((error) => {
+                // console.log("数据库连接失败！", error);
+            });
+        });
+    };
+
+    findOne(collectionName, json, data = {}) {
+        return new Promise((resolve, reject) => {
+            this.connect().then((db) => {
+                const result = db.collection(collectionName).findOne(json, data);
                 result.toArray((err, docs) => {
                     if (err) {
                         reject(err);
@@ -115,10 +137,10 @@ class Db {
         });
     };
 
-    removeOne(collectionName, json) {
+    remove(collectionName, json) {
         return new Promise((resolve, reject) => {
             this.connect().then((db) => {
-                db.collection(collectionName).removeOne(json, (error, result) => {
+                db.collection(collectionName).remove(json, (error, result) => {
                     if (error) {
                         reject(error);
                     } else {

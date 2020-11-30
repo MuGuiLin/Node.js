@@ -25,15 +25,18 @@
     <h1>编辑用户</h1>
     <hr />
     <form
-      action="/api/addUser"
+      action="/api/editUser"
       method="post"
       enctype="multipart/form-data"
       onsubmit="return submitFn()"
     >
+      <p>ID：<input type="text" name="_id" value="{{@_id}}" readonly /></p>
       <p>
         昵称：<input type="text" name="username" value="{{username}}" required />
       </p>
-      <p>密码：<input type="password" name="password" value="{{password}}" /></p>
+      <p>
+        密码：<input type="password" name="password" value="{{password}}" />
+      </p>
       <p>
         性别：<label><input type="radio" name="sex" value="1" /> 先生</label>
         <label><input type="radio" name="sex" value="2" /> 女士</label>
@@ -43,8 +46,12 @@
       <p>电话：<input type="tel" name="phone" value="{{phone}}" required /></p>
       <p>邮箱：<input type="email" name="email" value="{{email}}" /></p>
       <p>
-        爱好：<label><input type="checkbox" name="hobbys" value="1" /> 学习</label>
-        <label><input type="checkbox" checked name="hobbys" value="2" /> 打球</label>
+        爱好：<label
+          ><input type="checkbox" name="hobbys" value="1" /> 学习</label
+        >
+        <label
+          ><input type="checkbox" checked name="hobbys" value="2" /> 打球</label
+        >
         <label><input type="checkbox" name="hobbys" value="3" /> 看书</label>
         <label><input type="checkbox" name="hobbys" value="4" /> 旅游</label>
       </p>
@@ -58,7 +65,6 @@
       function submitFn() {
         console.log($("form").serializeArray());
       }
-      console.log($);
     </script>
   </body>
 </html>

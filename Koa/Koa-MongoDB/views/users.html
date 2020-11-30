@@ -37,6 +37,11 @@
     <hr />
     <section>
       <table>
+        <caption align="left">
+          <a href="/addUser">
+            <button>新增用户</button>
+          </a>
+        </caption>
         <thead>
           <tr>
             <th>序号</th>
@@ -63,7 +68,12 @@
             <td>{{$value.email}}</td>
             <td>{{$value.hobbys}}</td>
             <td>
-              <button data-id="{{$value.username}}" class="edit-user">编辑</button>
+              <button data-id="{{@$value._id}}" class="edit-user">
+                编辑
+              </button>
+              <button data-id="{{$value.username}}" class="del-user">
+                删除
+              </button>
             </td>
           </tr>
           {{/each}}
@@ -76,7 +86,13 @@
     <script src="/js/jquery.js"></script>
     <script>
       $(document.body).on("click", ".edit-user", function (e) {
-        window.location.href = `/editUser/${$(this).attr("data-id")}`;
+        window.location.href = `/userInfo/${$(this).attr("data-id")}`;
+      });
+
+      $(document.body).on("click", ".del-user", function (e) {
+        if (window.confirm("是否确认")) {
+          window.location.href = `api/delUser/${$(this).attr("data-id").replace(/\"/g, "")}`;
+        }
       });
     </script>
   </body>
