@@ -2,10 +2,19 @@
 <html lang="en">
   <head>
     {{include './components/mate.html' '首页'}}
+    <style>
+      h1.h1{
+        font-size: 68px;
+        color: #0170fe;
+        text-align: center;
+      }
+    </style>
   </head>
+
   <body>
     {{include './components/header.html' header}}
     <section class="container">
+      <h1 class="h1">Koa2 + MongoDB v4 目项构建</h1>
       <div class="row">
          <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
           <div class="carousel-inner">
@@ -34,18 +43,6 @@
         <div class="col">1 of 3</div>
         <div class="col-5">2 of 3 (wider)</div>
         <div class="col">3 of 3</div>
-      </div>
-
-      <div class="row">
-        <ul>
-          {{each list}}
-          <li>{{$index}} -> {{$value}}</li>
-          {{/each}}
-          <hr />
-          <% for(var i = 0; i < list.length; i++){ %>
-          <li><%= i %> -> <%= list[i] %></li>
-          <% } %>
-        </ul>
       </div>
 
     </section>

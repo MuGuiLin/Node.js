@@ -4,33 +4,77 @@
     {{include './components/mate.html' '新闻'}}
   </head>
   <body>
-    <div class="container">
-      <h1>Hello, world!</h1>
-      <div class="container-sm">100% wide until small breakpoint</div>
-      <div class="container-md">100% wide until medium breakpoint</div>
-      <div class="container-lg">100% wide until large breakpoint</div>
-      <div class="container-xl">100% wide until extra large breakpoint</div>
-    </div>
+    {{include './components/header.html' header}}
+    <section class="container">
+      <h1>新闻中心</h1>
+      <hr>
+      <div class="card-columns">
+        <div class="card">
+          <img src="img/iview.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title that wraps to a new line</h5>
+            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          </div>
+        </div>
+        <div class="card p-3">
+          <blockquote class="blockquote mb-0 card-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                Someone famous in <cite title="Source Title">Source Title</cite>
+              </small>
+            </footer>
+          </blockquote>
+        </div>
+        <div class="card">
+          <img src="img/video.png" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This card has supporting text</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card bg-primary text-white text-center p-3">
+          <blockquote class="blockquote mb-0">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat.</p>
+            <footer class="blockquote-footer text-white">
+              <small>
+                Someone famous in <cite title="Source Title">Source Title</cite>
+              </small>
+            </footer>
+          </blockquote>
+        </div>
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <div class="card">
+          <img src="img/uni-app.jpg" class="card-img-top" alt="...">
+        </div>
+        <div class="card p-3 text-right">
+          <blockquote class="blockquote mb-0">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">
+              <small class="text-muted">
+                Someone famous in <cite title="Source Title">Source Title</cite>
+              </small>
+            </footer>
+          </blockquote>
+        </div>
+        <div class="card">
+          <img src="img/iview.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is another card with title and supporting text below. This card has some additional content to make it slightly taller overall.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">One of three columns</div>
-        <div class="col-sm">One of three columns</div>
-        <div class="col-sm">One of three columns</div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col">1 of 3</div>
-        <div class="col-6">2 of 3 (wider)</div>
-        <div class="col">3 of 3</div>
-      </div>
-      <div class="row">
-        <div class="col">1 of 3</div>
-        <div class="col-5">2 of 3 (wider)</div>
-        <div class="col">3 of 3</div>
-      </div>
-    </div>
+    {{ include './components/footer.html', list }}
   </body>
 </html>

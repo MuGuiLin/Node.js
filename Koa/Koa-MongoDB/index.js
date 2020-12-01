@@ -1,12 +1,21 @@
 const Koa = require('koa'),
     path = require('path'),
-    router = require('./router/api-router'),
-    config = require('./config/index'),
     KoaBody = require('koa-body'),
     KoaStatic = require('koa-static'),
-    KoaRender = require('koa-art-template');
+    KoaRender = require('koa-art-template'),
+
+    router = require('koa-router')(),
+//  router = require('./routers/router'), // 之前没路由模块化时的路由
+
+    config = require('./config/index'),
+
+    api = require('./routers/api'),
+    view = require('./routers/view'),
+    admin = require('./routers/admin');
+
 
 const server = new Koa();
+
 
 // HTML模板引擎配置
 KoaRender(server, ({
@@ -15,7 +24,21 @@ KoaRender(server, ({
     debug: process.env.NODE_ENV !== 'production'
 }));
 
-(async () => {
+; (async () => {
+
+
+    router
+        // 配置子路由(层级路由) page视图模块
+        .use('', view.routes())
+
+        // 配置子路由(层级路由) page视图 后台管理模块
+        .use('/admin', admin.routes())
+
+        // 配置子路由(层级路由) api模块（该模块在向外暴露时就启动了，所以这里就不用再启动路由了）
+        .use('/api', api)
+
+
+
     server
         // koa 应用级中间件，在匹配路由之前，做的一系列操作
         .use(async (ctx, next) => {
@@ -25,7 +48,8 @@ KoaRender(server, ({
 
             // 当没有匹配到路由时 的错误处理
             if (404 === ctx.status) {
-                ctx.body = '404'
+                // ctx.body = '404';
+                ctx.render('404');
             } else {
                 console.log(ctx.url);
             }

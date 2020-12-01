@@ -5,8 +5,49 @@
   </head>
   <body>
     {{include './components/header.html' header}}
-    <h1>关于</h1>
-    <hr />
+
+    <section class="container">
+      <h1>关于我们</h1>
+      <hr />
+      <div class="container-sm">100% wide until small breakpoint</div>
+      <div class="container-md">100% wide until medium breakpoint</div>
+      <div class="container-lg">100% wide until large breakpoint</div>
+      <div class="container-xl">100% wide until extra large breakpoint</div>
+    </section>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">One of three columns</div>
+        <div class="col-sm">One of three columns</div>
+        <div class="col-sm">One of three columns</div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">1 of 3</div>
+        <div class="col-6">2 of 3 (wider)</div>
+        <div class="col">3 of 3</div>
+      </div>
+      <div class="row">
+        <div class="col">1 of 3</div>
+        <div class="col-5">2 of 3 (wider)</div>
+        <div class="col">3 of 3</div>
+      </div>
+    </div>
+    <section class="container">
+      <div class="row">
+        <ul>
+          {{each list}}
+          <li>{{$index}} -> {{$value}}</li>
+          {{/each}}
+          <hr />
+          <% for(var i = 0; i < list.length; i++){ %>
+          <li><%= i %> -> <%= list[i] %></li>
+          <% } %>
+        </ul>
+      </div>
+    </section>
     <% include('./components/footer.html', list) %>
   </body>
 
