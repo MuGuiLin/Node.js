@@ -56,9 +56,8 @@ router
         // const { result } = await db.insertOne('users', data);
         if (result.ok) {
             ctx.body = result;
-            ctx.redirect('/admin/users');
+            ctx.redirect('/admin/user');
         }
-
     })
 
     // 编辑用户
@@ -69,7 +68,7 @@ router
         const { result } = await db.updateOne('users', { _id: db.ObjectId(_id) }, data);
         try {
             if (result.ok) {
-                ctx.redirect('/admin/users');
+                ctx.redirect('/admin/user');
             }
         } catch (error) {
             ctx.body = error;
@@ -81,7 +80,27 @@ router
         const { id } = ctx.params;
         // const id = ctx.query.id; // <form  action="/api/editUser"  method="get"
         const { result } = await db.removeOne('users', { _id: db.ObjectId(id) });
-        result.ok && ctx.redirect('/admin/users');
+        result.ok && ctx.redirect('/admin/user');
+    })
+
+
+    // 新增新闻
+    .post('/addNews', async (ctx, next) => {
+        let data = {
+            "username": "小明",
+            "password": "666",
+            "sex": 1,
+            "age": 28,
+            "email": "muguilin@foxmail.com",
+            "phone": "13558793025",
+            "hobbys": [1, 2, 3]
+        };
+        data = ctx.request.body;
+        const { result } = await db.insertOne('news', data);
+        if (result.ok) {
+            ctx.body = result;
+            ctx.redirect('/admin/news');
+        }
     })
 
     .post('/update', async (ctx, next) => {

@@ -3,17 +3,22 @@ const router = require('koa-router')();
 
 const db = require('../models/db.js');
 
+// router.prefix('/admin');
+
+const user = require('./admin/user.js');
+const news = require('./admin/news.js');
+
 const nav = [
-    {name: '管理首页'},
-    {name: '新闻管理'},
-    {name: '轮播图管理'},
-    {name: '用户管理'},
+    { name: '管理首页' },
+    { name: '新闻管理' },
+    { name: '轮播图管理' },
+    { name: '用户管理' },
 ]
 
 /**
  * 路由模块化 之 后台管理视图模块
  */
-module.exports = router
+router
 
     // 管理首页
     .get('/', async (ctx, next) => {
@@ -27,32 +32,20 @@ module.exports = router
 
     })
 
-    // 用户管理
-    .get('/users', async (ctx, next) => { 
-        const data = {
-            list: await db.find('users', {})
-        }
-        await ctx.render('admin/users', data);
+    // '轮播图管理
+    .get('/banner', async (ctx, next) => {
+        await ctx.render('admin/banner');
     })
 
-    // 新增用户
-    .get('/addUser', async (ctx, next) => {
-        await ctx.render('admin/addUser');
-    })
+    // 用户管理 模块
+    .use('/user', user) 
+    
+    // 新闻管理 模块
+    .use('/news', news.routes())
 
-    // 编辑用户(详情)
-    .get('/userInfo/:id', async (ctx, next) => {
-        const { id } = ctx.params;
-        const data = await db.find('users', { _id: db.ObjectId(id) });
-        await ctx.render('admin/editUser', data[0]);
-    })
+; module.exports = router;
 
-    // 新闻管理
-    .get('/news', async (ctx, next) => { 
-        await ctx.render('admin/news');
-    })
 
-   
 
 
 

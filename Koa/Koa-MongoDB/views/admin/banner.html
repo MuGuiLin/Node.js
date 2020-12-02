@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {{include './components/mate.html' '新闻列表'}}
+    {{include './components/mate.html' '轮播图列表'}}
 
     <style>
       h1 {
@@ -32,11 +32,11 @@
   </head>
   <body>
     {{include './components/header.html' header}}
-    <h1>新闻列表</h1>
+    <h1>轮播图列表</h1>
     <hr />
     <section class="container">
       <div class="row text-right">
-        <a href="/addNews" class="btn btn-success btn-lg">撰写新闻</a>
+        <a href="/addNews" class="btn btn-success btn-lg">上传轮播图</a>
       </div>
       <br />
       <div class="row">
@@ -44,13 +44,8 @@
           <thead class="thead-light">
             <tr class="bg-primary">
               <th scope="col">序号</th>
-              <th scope="col">ID</th>
-              <th scope="col">昵称</th>
-              <th scope="col">性别</th>
-              <th scope="col">年龄</th>
-              <th scope="col">电话</th>
-              <th scope="col">邮箱</th>
-              <th scope="col">爱好</th>
+              <th scope="col">预览</th>
+              <th scope="col">URL</th>
               <th scope="col">操作</th>
             </tr>
           </thead>
@@ -60,12 +55,7 @@
             <tr>
               <td scope="row">{{$index}}</td>
               <td>{{@$value._id}}</td>
-              <td>{{$value.username}}</td>
               <td>{{$value.sex}}</td>
-              <td>{{$value.age}}</td>
-              <td>{{$value.phone}}</td>
-              <td>{{$value.email}}</td>
-              <td>{{$value.hobbys}}</td>
               <td>
                 <a
                   href="/userInfo/{{@$value._id}}"

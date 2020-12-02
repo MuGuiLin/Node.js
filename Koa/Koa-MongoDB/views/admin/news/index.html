@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {{include './components/mate.html' '用户列表'}}
+    {{include '../components/mate.html' '新闻列表'}}
 
     <style>
       h1 {
@@ -28,15 +28,19 @@
         line-height: 36px;
         border: 1px solid gray;
       }
+      table tr td .cover{
+        width: 100px;
+        height: 60px;
+      }
     </style>
   </head>
   <body>
-    {{include './components/header.html' header}}
-    <h1>用户列表</h1>
+    {{include '../components/header.html' header}}
+    <h1>新闻列表</h1>
     <hr />
     <section class="container">  
       <div class="row text-right">
-        <a href="/admin/addUser" class="btn btn-success btn-lg ">新增用户</a>
+        <a href="/admin/news/add" class="btn btn-success btn-lg ">撰写新闻</a>
       </div>
       <br>
       <div class="row">
@@ -44,13 +48,10 @@
           <thead class="thead-light">
             <tr class="bg-primary">
               <th scope="col">序号</th>
-              <th scope="col">ID</th>
-              <th scope="col">昵称</th>
-              <th scope="col">性别</th>
-              <th scope="col">年龄</th>
-              <th scope="col">电话</th>
-              <th scope="col">邮箱</th>
-              <th scope="col">爱好</th>
+              <th scope="col">标题图片</th>
+              <th scope="col">新闻标题</th>
+              <th scope="col">作者</th>
+              <th scope="col">发布时间</th>
               <th scope="col">操作</th>
             </tr>
           </thead>
@@ -59,16 +60,14 @@
             {{each list}}
             <tr>
               <td scope="row">{{$index}}</td>
-              <td>{{@$value._id}}</td>
-              <td>{{$value.username}}</td>
-              <td>{{$value.sex}}</td>
-              <td>{{$value.age}}</td>
-              <td>{{$value.phone}}</td>
-              <td>{{$value.email}}</td>
-              <td>{{$value.hobbys}}</td>
+              <td><img class="cover" src="{{$value.cover}}" alt=""/></td>
+              <td>{{$value.title}}</td>
+              <td>{{$value.author}}</td>
+              <td>{{$value.time}}</td>
               <td>
-                <a href="/admin/userInfo/{{@$value._id}}" class="btn btn-primary edit-user">编辑</a>
-                <button data-id="{{@$value._id}}" class="btn btn-danger del-user">
+                <a href="/admin/news/edit/{{@$value._id}}" class="btn btn-sm btn-primary">编辑</a>
+                <a href="/admin/news/info/{{@$value._id}}" class="btn btn-sm btn-success">详情</a>
+                <button data-id="{{@$value._id}}" class="btn btn-sm btn-danger del-news">
                   删除
                 </button>
               </td>
@@ -84,13 +83,13 @@
         </table>
       </div>
     </section>
-    <% include('./components/footer.html', list) %>
+    <% include('../components/footer.html', list) %>
 
     <script src="/js/jquery.js"></script>
     <script>
-      $(document.body).on("click", ".del-user", function (e) {
+      $(document.body).on("click", ".del-news", function (e) {
         if (window.confirm("是否确认删除？")) {
-          window.location.href = `api/delUser/${$(this).attr("data-id").replace(/\"/g, "")}`;
+          window.location.href = `${location.origin}/api/delNews/${$(this).attr("data-id").replace(/\"/g, "")}`;
         }
       });
     </script>

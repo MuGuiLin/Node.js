@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{include '../components/mate.html' '新增新闻'}}
+    <style>
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin: 50px auto;
+        padding: 10px 30px;
+        border-radius: 8px;
+        border: 1px solid gray;
+      }
+      .form-row{
+        margin: 20px 0;
+      }
+      button {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    {{include '../components/header.html' header}}
+    <h1>新增新闻</h1>
+    <hr />
+    <section class="container">
+      <form class="needs-validation was-validateds" novalidate  action="/api/addNews" method="post" enctype="multipart/form-data" onsubmit="return submitFn()">
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="title">新闻标题：</label>
+            <input type="text" name="title" class="form-control" id="title" value="" required />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="author">新闻作者：</label>
+            <input type="text" name="author" class="form-control" id="author" value="" required />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="content">新闻内容：</label>
+            <section id="content-editor">
+                <p>在这里编写新闻内容！</p>
+            </section>
+            <textarea id="content-textarea" name="content" style="display: none;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="cover">封面图片：</label>
+            <!-- <input type="file" name="cover" class="form-control" id="cover" /> -->
+            <input type="text" name="cover" class="form-control" id="cover" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div> 
+        
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="url">原文链接：</label>
+            <input type="url" name="url" class="form-control" id="url" value="" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="summary">摘要：</label>
+            <textarea name="summary"  class="form-control" id="summary" cols="20" rows="6"></textarea>
+          </div>
+        </div>
+       
+        <div class="">
+          <button class="btn btn-lg btn-warning" type="reset">重 置</button>
+          <button class="btn btn-lg btn-primary" type="submit">提 交</button>
+        </div>
+      </form>
+      
+    </section>
+    <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+    <script>
+      function submitFn() {
+        console.log($("form").serializeArray());
+      }
+
+      const editor = new window.wangEditor('#content-editor');
+      const $textarea = $('#content-textarea');
+
+      editor.config.onchange = function (html) {
+          // 第二步，监控变化，同步更新到 textarea
+          $textarea.val(html);
+      };
+      editor.create();
+
+      // 第一步，初始化 textarea 的值
+      $textarea.val(editor.txt.html());
+    </script>
+  </body>
+</html>

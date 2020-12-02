@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{include '../components/mate.html' '用户详情'}}
+    <style>
+      .title{
+        font-size: 32px;
+        line-height: 100px;
+      }
+      .content{
+        font-size: 16px;
+        line-height: 32px;
+        text-align: justify;
+      }
+    </style>
+  </head>
+
+  <body>
+    {{include '../components/header.html' header}}
+    <section class="container">
+      <h1 class="title">{{title}}</h1>
+      <hr>
+      <a href="{{url}}" target="_blank" rel="noopener noreferrer">源文链接</a>
+      <article class="content">
+        {{@content}}
+      </article>
+      </div>
+  </body>
+</html>
