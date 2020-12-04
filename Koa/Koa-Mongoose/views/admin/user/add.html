@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{include '../components/mate.html' '新增用户'}}
+    <style>
+      h1 {
+        text-align: center;
+      }
+      form {
+        margin: 50px auto;
+        padding: 30px;
+        width: 800px;
+        border-radius: 8px;
+        border: 1px solid gray;
+      }
+      button {
+        font-size: 18px;
+      }
+    </style>
+  </head>
+
+  <body>
+    {{include '../components/header.html' header}}
+    <h1>新增用户</h1>
+    <hr />
+    <section class="container">
+      <form class="needs-validation was-validateds" novalidate  action="/api/addUser" method="post" enctype="multipart/form-data" onsubmit="return submitFn()">
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="username">昵称：</label>
+            <input type="text" name="username" class="form-control" id="username" value="" required />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="password">密码：</label>
+            <input type="password" name="password" class="form-control" id="password" value="" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="age">年龄：</label>
+            <input type="month" name="age" class="form-control" value="" id="" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="sex">性别：</label>
+            <div class="custom-controls">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="sex" value="1" id="customRadioInline1" class="custom-control-input" />
+                <label class="custom-control-label" for="customRadioInline1">先生</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="sex" value="2" id="customRadioInline2" class="custom-control-input" />
+                <label class="custom-control-label" for="customRadioInline2">女士</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" name="sex" value="0" id="customRadioInline3" class="custom-control-input" />
+                <label class="custom-control-label" for="customRadioInline3">保密</label>
+              </div>
+            </div>
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="phone">电话：</label>
+            <input type="tel" name="phone" class="form-control" id="phone" value="" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="email">邮箱：</label>
+            <input type="email" name="email" class="form-control" id="email" value="" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="phone">爱好：</label>
+            <div class="custom-controls">
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" name="hobbys" class="custom-control-input" value="1" id="hobbys1" />
+                <label class="custom-control-label" for="hobbys1">学习</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" name="hobbys" class="custom-control-input" value="2" id="hobbys2" />
+                <label class="custom-control-label" for="hobbys2">打球</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" name="hobbys" class="custom-control-input" value="3" id="hobbys3" />
+                <label class="custom-control-label" for="hobbys3">看书</label>
+              </div>
+              <div class="custom-control custom-checkbox custom-control-inline">
+                <input type="checkbox" name="hobbys" class="custom-control-input" value="4" id="hobbys4" />
+                <label class="custom-control-label" for="hobbys4">旅游</label>
+              </div>
+            </div>
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="City">城市</label>
+            <input type="text" class="form-control" id="City"  />
+            <div class="invalid-tooltip">
+              Please provide a valid city.
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationTooltip04">状态</label>
+            <select class="custom-select" id="validationTooltip04" >
+              <option selected disabled value="">Choose...</option>
+              <option>...</option>
+            </select>
+            <div class="invalid-tooltip">
+              Please select a valid state.
+            </div>
+          </div>
+          <div class="col-md-3 mb-3">
+            <label for="validationTooltip05">Zip</label>
+            <input type="text" class="form-control" id="validationTooltip05" />
+            <div class="invalid-tooltip">
+              Please provide a valid zip.
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <button class="btn btn-warning" type="reset">重 置</button>
+          <button class="btn btn-primary" type="submit">提 交</button>
+        </div>
+      </form>
+      
+    </section>
+    <script>
+      function submitFn() {
+        console.log($("form").serializeArray());
+      }
+    </script>
+  </body>
+</html>

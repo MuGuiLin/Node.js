@@ -8,7 +8,7 @@ const MongoClient = require('mongodb').MongoClient;
 const Config = require('../config/data-base.json');
 
 // 数据库连接
-MongoClient.connect('mongodb://localhost:27017/', (error, client) => {
+MongoClient.connect('mongodb://localhost:27017/', {useNewUrlParser: true, useUnifiedTopology: true}, (error, client) => {
     if (error) {
         console.log('数据库连接失败！', error);
         return false;
