@@ -5,8 +5,6 @@ const Koa = require('koa'),
     KoaRender = require('koa-art-template'),
 
     router = require('koa-router')(),
-//  router = require('./routers/router'), // 之前没路由模块化时的路由
-
     config = require('./config/index'),
 
     api = require('./routers/api'),

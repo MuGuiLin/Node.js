@@ -23,45 +23,88 @@
     {{include '../components/header.html' header}}
     <h1>编辑用户</h1>
     <hr />
-    <form
-      action="/api/editUser"
-      method="post"
-      enctype="multipart/form-data"
-      onsubmit="return submitFn()"
-    >
-      <p>ID：<input type="text" name="_id" value="{{@_id}}" readonly /></p>
-      <p>
-        昵称：<input type="text" name="username" value="{{username}}" required />
-      </p>
-      <p>
-        密码：<input type="password" name="password" value="{{password}}" />
-      </p>
-      <p>
-        性别：<label><input type="radio" name="sex" value="1" /> 先生</label>
-        <label><input type="radio" name="sex" value="2" /> 女士</label>
-        <label><input type="radio" checked name="sex" value="0" /> 保密</label>
-      </p>
+    <div class="container">
+      <form class="needs-validation was-validateds" novalidate  action="/api/editNews" method="post" enctype="multipart/form-data" onsubmit="return submitFn()">
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="title">新闻标题：</label>
+            <input type="hidden" name="_id" value="{{@ doc._id}}" required />
+            <input type="text" name="title" class="form-control" id="title" value="{{doc.title}}" required />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
 
-      <p>年龄：<input type="month" name="age" value="{{age}}" /></p>
-      <p>电话：<input type="tel" name="phone" value="{{phone}}" required /></p>
-      <p>邮箱：<input type="email" name="email" value="{{email}}" /></p>
-      <p>
-        爱好：
-        <label><input type="checkbox" name="hobbys" value="1" /> 学习</label >
-        <label><input type="checkbox" checked name="hobbys" value="2" /> 打球</label>
-        <label><input type="checkbox" name="hobbys" value="3" /> 看书</label>
-        <label><input type="checkbox" name="hobbys" value="4" /> 旅游</label>
-      </p>
-      <p>
-        <button type="reset">重 置</button> <button type="submit">提 交</button>
-      </p>
-    </form>
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="author">新闻作者：</label>
+            <input type="text" name="author" class="form-control" id="author" value="{{doc.author}}" required />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div>
 
-    <script src="/js/jquery.js"></script>
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="content">新闻内容：</label>
+            <section id="content-editor">
+              {{@ doc.content}}
+            </section>
+            <textarea id="content-textarea" name="content" style="display: none;"></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-6">
+            <label for="cover">封面图片：</label>
+            <!-- <input type="file" name="cover" class="form-control" id="cover" /> -->
+            <input type="text" name="cover" class="form-control" value="{{doc.cover}}" id="cover" />
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+          </div>
+        </div> 
+        
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="url">原文链接：</label>
+            <input type="url" name="url" class="form-control" id="url" value="{{doc.url}}" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-12">
+            <label for="summary">摘要：</label>
+            <textarea name="summary"  class="form-control" id="summary" cols="20" rows="6" >{{@ doc.summary}}</textarea>
+          </div>
+        </div>
+       
+        <div class="">
+          <button class="btn btn-lg btn-warning" type="reset">重 置</button>
+          <button class="btn btn-lg btn-primary" type="submit">提 交</button>
+        </div>
+      </form>
+    </div>
+
+    <script type="text/javascript" src="/js/wangEditor.min.js"></script>
     <script>
       function submitFn() {
         console.log($("form").serializeArray());
       }
+
+      const editor = new window.wangEditor('#content-editor');
+      const $textarea = $('#content-textarea');
+
+      editor.config.onchange = function (html) {
+          // 第二步，监控变化，同步更新到 textarea
+          $textarea.val(html);
+      };
+      editor.create();
+
+      // 第一步，初始化 textarea 的值
+      $textarea.val(editor.txt.html());
     </script>
   </body>
 </html>

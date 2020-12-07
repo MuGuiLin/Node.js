@@ -26,7 +26,7 @@
     <h1>新增新闻</h1>
     <hr />
     <section class="container">
-      <form class="needs-validation was-validateds" novalidate  action="/api/addNews" method="post" enctype="multipart/form-data" onsubmit="return submitFn()">
+      <form class="needs-validation was-validateds" novalidate  action="/api/addNews" method="POST" enctype="multipart/form-data" onsubmit="return submitFn()">
         <div class="form-row">
           <div class="col-md-12 mb-6">
             <label for="title">新闻标题：</label>
@@ -89,7 +89,8 @@
       </form>
       
     </section>
-    <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+
+    <script type="text/javascript" src="/js/wangEditor.min.js"></script>
     <script>
       function submitFn() {
         console.log($("form").serializeArray());

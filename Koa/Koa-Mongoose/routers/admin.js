@@ -1,8 +1,6 @@
 
 const router = require('koa-router')();
 
-const db = require('../models/db.js');
-
 // router.prefix('/admin');
 
 const user = require('./admin/user.js');

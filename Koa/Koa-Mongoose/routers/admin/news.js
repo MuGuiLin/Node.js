@@ -1,7 +1,7 @@
 
 const router = require('koa-router')();
 
-const db = require('../../models/db.js');
+const news = require('../../models/news.js');
 
 // router.prefix('/news');
 
@@ -14,7 +14,7 @@ const db = require('../../models/db.js');
     // 新闻列表
     .get('/', async (ctx, next) => {
         const data = {
-            list: await db.find('news', {})
+            list: await news.find({})
         }
         await ctx.render('admin/news/index', data);
     })
@@ -26,16 +26,15 @@ const db = require('../../models/db.js');
 
     // 编辑新闻
     .get('/edit/:id', async (ctx, next) => {
-        const { id } = ctx.params;
-        const data = await db.find('news', { _id: db.ObjectId(id) });
-        await ctx.render('admin/news/edit', data[0]);
+        const data = await news.find({ _id: ctx.params.id });
+        await ctx.render('admin/news/edit', { doc: data[0] });
     })
 
     // 新闻详情
     .get('/info/:id', async (ctx, next) => {
         const { id } = ctx.params;
-        const data = await db.findOne('news', { _id: db.ObjectId(id) });
-        await ctx.render('admin/news/info', data);
+        const data = await news.findOne({ _id: id });
+        await ctx.render('admin/news/info', { doc: data });
     })
 
 

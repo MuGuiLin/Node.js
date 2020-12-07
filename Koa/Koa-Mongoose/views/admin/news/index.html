@@ -32,6 +32,13 @@
         width: 100px;
         height: 60px;
       }
+      table tr td .title{
+        display: inline-block;
+        width: 200px;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
     </style>
   </head>
   <body>
@@ -61,9 +68,9 @@
             <tr>
               <td scope="row">{{$index}}</td>
               <td><img class="cover" src="{{$value.cover}}" alt=""/></td>
-              <td>{{$value.title}}</td>
+              <td><a class="title" href="/admin/news/edit/{{@$value._id}}">{{$value.title}}</a></td>
               <td>{{$value.author}}</td>
-              <td>{{$value.time}}</td>
+              <td>{{$value.date}}</td>
               <td>
                 <a href="/admin/news/edit/{{@$value._id}}" class="btn btn-sm btn-primary">编辑</a>
                 <a href="/admin/news/info/{{@$value._id}}" class="btn btn-sm btn-success">详情</a>

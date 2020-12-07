@@ -1,6 +1,7 @@
 
 const router = require('koa-router')();
-const db = require('../models/db.js');
+const user = require('../models/user.js');
+const news = require('../models/news.js');
 
 /**
  *  路由模块化 之 Api接口模块
@@ -42,19 +43,16 @@ router
 
     // 新增用户
     .post('/addUser', async (ctx, next) => {
-        let data = {
-            "username": "小明",
-            "password": "666",
-            "sex": 1,
-            "age": 28,
-            "email": "muguilin@foxmail.com",
-            "phone": "13558793025",
-            "hobbys": [1, 2, 3]
-        };
-        data = ctx.request.body;
-        const { result } = await db.insert('users', data);
-        // const { result } = await db.insertOne('users', data);
-        if (result.ok) {
+        /**
+         * 向users集合插入数据 实例化()、.save()
+         * 1、先实例化集合操作模型（实例化时填写要插入的数据）
+         * 2、调用save()方法，将数据插入数据库
+         *  save()方法 参数1：回调函数监听操作成功与否
+         */
+        const data = ctx.request.body;
+        const add = new user({ ...data });
+        const result = await add.save();
+        if (result._id) {
             ctx.body = result;
             ctx.redirect('/admin/user');
         }
@@ -65,7 +63,7 @@ router
         const data = ctx.request.body;
         const _id = data._id;
         delete data._id;
-        const { result } = await db.updateOne('users', { _id: db.ObjectId(_id) }, data);
+        const result = await user.updateOne({ _id }, data);
         try {
             if (result.ok) {
                 ctx.redirect('/admin/user');
@@ -78,19 +76,51 @@ router
     // 删除用户
     .get('/delUser/:id', async (ctx, next) => {
         const { id } = ctx.params;
-        // const id = ctx.query.id; // <form  action="/api/editUser"  method="get"
-        const { result } = await db.removeOne('users', { _id: db.ObjectId(id) });
+        const result = await user.deleteOne({ _id: id });
         result.ok && ctx.redirect('/admin/user');
     })
 
+    // 用户详情
+    .get('/people/:id', async (ctx, next) => {
+        const { id } = ctx.params;
+        await user.getPeople({ _id: id }, (res) => {
+            console.log(res);
+            ctx.body = res;
+        });
+    })
+
+    // 获取所有女性用户
+    .get('/people2', async (ctx, next) => {
+       const result = await user.getPeople2({sex: 2});
+       ctx.status = 200;
+       ctx.body = result;
+    })
 
     // 新增新闻
     .post('/addNews', async (ctx, next) => {
-        let data = ctx.request.body;
-        const { result } = await db.insertOne('news', data);
-        if (result.ok) {
+        const data = ctx.request.body;
+        const result = await new news(data).save();
+        if (result._id) {
             ctx.body = result;
             ctx.redirect('/admin/news');
+        }
+    })
+
+    // 编辑新闻
+    .post('/editNews', async (ctx, next) => {
+        try {
+            const data = ctx.request.body;
+            const _id = data._id;
+            delete data._id;
+            await news.updateOne({ _id }, { $set: data }, (err, res) => {
+                if (err) {
+                    ctx.body = err;
+                } else {
+                    ctx.redirect('/admin/news');
+                }
+            });
+        } catch (error) {
+            ctx.body = error;
         }
     })
 
@@ -123,6 +153,6 @@ router
         ctx.body = koaBodyPostDate;
     })
 
-// 向下暴露 Api路由并启动
-; module.exports = router.routes();
+    // 向下暴露 Api路由并启动
+    ; module.exports = router.routes();
 

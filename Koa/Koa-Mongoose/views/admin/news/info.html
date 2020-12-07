@@ -18,11 +18,11 @@
   <body>
     {{include '../components/header.html' header}}
     <section class="container">
-      <h1 class="title">{{title}}</h1>
+      <h1 class="title">{{doc.title}}</h1>
       <hr>
-      <a href="{{url}}" target="_blank" rel="noopener noreferrer">源文链接</a>
+      <a href="{{doc.url}}" target="_blank" rel="noopener noreferrer">源文链接</a>
       <article class="content">
-        {{@content}}
+        {{@ doc.content}}
       </article>
       </div>
   </body>
