@@ -80,9 +80,10 @@ router
         result.ok && ctx.redirect('/admin/user');
     })
 
-    // 用户详情
+    // 用户详情 
     .get('/people/:id', async (ctx, next) => {
         const { id } = ctx.params;
+        // 静态方法 statics 用回调函数
         await user.getPeople({ _id: id }, (res) => {
             console.log(res);
             ctx.body = res;
@@ -91,9 +92,20 @@ router
 
     // 获取所有女性用户
     .get('/people2', async (ctx, next) => {
-       const result = await user.getPeople2({sex: 2});
-       ctx.status = 200;
-       ctx.body = result;
+        // 静态方法 statics 用Promise
+        const result = await user.getPeople2({sex: 2});
+        ctx.status = 200;
+        ctx.body = result;
+    })
+
+    // 返回 实例方法的 this
+    .get('/people3', async (ctx, next) => {
+        // 实例方法 methods （注要经过new 后才能用，不像静态方法可以直接调用哦！！）
+        const myuser = new user({});
+        const result = myuser.mupiao({sex: 2});
+        console.log(result);
+        ctx.status = 200;
+        ctx.body = result;
     })
 
     // 新增新闻

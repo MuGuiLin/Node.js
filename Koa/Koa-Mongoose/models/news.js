@@ -16,7 +16,7 @@ const NewsSchema = db.Schema({
     "cover" : String,
     "url" : {
         type: String,
-        // 自定义修饰符（在写入数据库前） 添加http//
+        // 自定义修饰符（在写入数据库前对数据进行格式化） 添加http//
         set(parmas) {
             return parmas.startsWith('http') ? parmas : 'http://'+ parmas;
         }
