@@ -54,8 +54,9 @@
         };
 
         // 创建链接
-        var socket = io.connect('http://127.0.0.1:8088');
-
+        var socket = io.connect('http://localhost:8088');
+        // var socket = io.connect('http://localhost:3000');
+        
         // 发送消息
         socket.emit('login', { username: '🔊' + Date.now() });
 
@@ -67,6 +68,7 @@
         // 发送消息
         $('#message-form')['onsubmit'] = function () {
             socket.emit('message', { text: $('#text').value });
+            console.log(socket)
             $('#text').value = '';
             return false;
         };

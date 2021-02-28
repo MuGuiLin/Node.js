@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js原生WebSocket</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .ws-box {
+            margin: 30px auto;
+            padding: 30px;
+            width: 600px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        .ws-box input {
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .ws-box input[type="text"] {
+            width: 80%;
+            height: 32px;
+        }
+
+        .ws-box input[type="button"] {
+            vertical-align: top;
+            width: 19%;
+            height: 32px;
+        }
+
+        .ws-box textarea {
+            box-sizing: border-box;
+            margin: 20px 0;
+            padding: 6px;
+            width: 100%;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Js原生WebSocket 连接测试</h1>
+    <hr>
+
+    <section class="ws-box">
+        <input type="text" id="url" autocomplete="no" placeholder="请在这里输入WebSocket链接地址，如：ws://138.28.55.16:8086" />
+        <input type="button" value="开始链接" id="link-btn" />
+
+        <textarea name="" id="msg" cols="60" rows="10" placeholder="这里是服务端返回的数据。。。"></textarea>
+
+        <input type="text" id="txt" placeholder="WebSocket链接成功后，可在这里输入向服务端发送的数据" />
+        <input type="button" value="发送数据" id="send-btn" />
+    </section>
+
+    <script>
+        window.onload = function () {
+            let ws = null;
+
+            const $ = function (el) {
+                return document.querySelector(el);
+            };
+
+            function readyState() {
+                let state = ['连接尚未建立！', '连接已建立，可以进行通信！', '连接正在进行关闭！', '连接已经关闭或者连接不能打开！'];
+                console.warn(`连接状态：${ws.readyState}，状态说明：${state[ws.readyState]}`);
+            };
+
+            function createWebSocket(url = 'ws://') {
+                if ('WebSocket' in window) {
+
+                    console.debug('当前WebSocket链接地址：', url);
+
+                    if (ws) ws.close();
+
+                    // 创建WebSocket链接服务
+                    ws = new WebSocket(url);
+
+                    // 打开WebSocket链接
+                    ws.onopen = function () {
+                        readyState();
+                        // 向服务端发送数据
+                        ws.send(JSON.stringify({
+                            text: '我是向服务端发送的数据'
+                        }));
+                        console.log("链接成功！数据发送中...");
+                    };
+
+                    // 监听服务端返回(客户端接收服务端数据时触发)
+                    ws.onmessage = function (evt) {
+                        console.log("已接收服务端返回数据：", evt.data);
+                        $('#msg').value = JSON.stringify(evt.data)
+                    };
+
+                    ws.onclose = function () {
+                        readyState();
+                        console.log("连接关闭!");
+
+                        // console.log("连接关闭，尝试重连!");
+                        // createWebSocket();
+                    };
+
+                    // 另一种监听方式(通信发生错误时触发)
+                    ws.addEventListener('error', function (err) {
+                        readyState();
+                        // console.log('连接异常：', err);
+                    });
+                } else {
+                    console.error("您的浏览器不支持 WebSocket API!");
+                }
+            };
+
+            $('#link-btn').onclick = function () {
+                var url = $('#url').value;
+
+                if (url) {
+                    createWebSocket(url);
+                } else {
+                    alert('请先输入WebSocket链接地址！');
+                }
+            };
+
+            $('#send-btn').onclick = function () {
+                var txt = $('#txt').value;
+                if (!ws) {
+                    alert('请先创建WebSocket连接服务！');
+                    return false;
+                }
+                if (txt) {
+                    ws.send(JSON.stringify({
+                        msg: txt,
+                        tamp: Date.now()
+                    }));
+                } else {
+                    alert('请先输入要发送的数据！');
+                }
+            };
+
+        };
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>socket.io</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        .io-box {
+            margin: 30px auto;
+            padding: 30px;
+            width: 600px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid gray;
+        }
+
+        .io-box input {
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .io-box input[type="text"] {
+            width: 80%;
+            height: 32px;
+        }
+
+        .io-box input[type="button"] {
+            vertical-align: top;
+            width: 19%;
+            height: 32px;
+        }
+
+        .io-box textarea {
+            box-sizing: border-box;
+            margin: 20px 0;
+            padding: 6px;
+            width: 100%;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>socket.io 链接测试</h1>
+    <hr>
+
+    <section class="io-box">
+
+        <textarea name="" id="msg" cols="60" rows="10" placeholder="这里是服务端返回的数据。。。"></textarea>
+
+        <input type="text" id="txt" placeholder="WebSocket链接成功后，可在这里输入向服务端发送的数据" />
+        <input type="button" value="发送数据" id="send-btn" />
+
+    </section>
+
+    <!-- <script src="https://cdn.bootcss.com/socket.io/2.2.0/socket.io.js"></script> -->
+    <script src="./js/socket.io2.js"></script>
+    <script>
+
+        const $ = function (el) {
+            return document.querySelector(el);
+        };
+
+        window.onload = function () {
+
+            // let url = 'ws://106.14.55.128:886';
+            let url = 'ws://localhost:888';
+
+
+            // 创建io (WebSocket) 链接服务
+            const socket = io(url);
+
+            console.log('io对象：', socket);
+
+            // on表示接收, emit表示发送
+
+            socket.on('connect', function () {
+                console.log('客户端连接上了！')
+                // 登录，同步前后端信息
+                // 请求后端login接口，写入socketid
+                socket.emit('login', {
+                    // 身份标识，可以是时间戳或者唯一id，最要用来回去socketid进行私聊
+                    id: 'socketid'+ new Date()
+                })
+            });
+
+            // 监听服务端发送过来的数据，并向服务端发送数据回去
+            socket.on('message', function (data) {
+                console.log(data);
+                $('#msg').value = data.msg;
+            });
+
+            // 表示连接断开了
+            socket.on('disconnect', function () {
+                console.log('聊天服务器断开了')
+            });
+
+            $('#send-btn').onclick = function () {
+                var txt = $('#txt').value;
+
+                if (txt) {
+                    // 向服务端发送数据
+                    socket.emit('sendMsg', {
+                        msg: txt,
+                        tamp: Date.now()
+                    });
+                } else {
+                    alert('请先输入要发送的数据！');
+                }
+            };
+
+        };
+
+    </script>
+</body>
+
+</html>
