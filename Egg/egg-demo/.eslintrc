@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": "eslint-config-egg/typescript",
+  "indent": [
+    "error",
+    4
+  ]
+}
