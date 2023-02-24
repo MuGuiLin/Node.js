@@ -6,18 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户管理</title>
-    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css" />
+    <link rel="stylesheet" href="static/css/base.css" />
 
     <style type="text/css">
-        .container {
-            padding: 50px;
-            text-align: center;
-            background: url(static/img/logo.jpg);
-            font-size: 16px;
-            color: white;
-        }
-
-
         ul.target {
             text-align: left;
         }
@@ -25,19 +17,12 @@
         ul.target li {
             line-height: 50px;
         }
-
-        ul.target li a {
-            color: white;
-        }
     </style>
 </head>
 
 <body>
+    <%- include('../header/index.ejs', {title: '用户管理' }); %>
     <div class="container text-center">
-        <h1>
-            Art-Template
-        </h1>
-        <hr>
         <ul class="target">
             <li><a href="https://ejs.bootcss.com/#install" target="_blank"
                     rel="noopener noreferrer">https://ejs.bootcss.com/#install</a></li>
@@ -51,15 +36,12 @@
             <li>-%&gt; 删除紧随其后的换行符</li>
             <li>_%&gt; 将结束标签后面的空格符删除</li>
         </ul>
+        <img width="100%" src="static/img/ejs.png" alt="ejs" />
         <% if (name) { %>
             <h2>
-                <%= name %>
+                <%= name %>，<%= age %>
             </h2>
-            <% } %>
-                <h2>
-                    <%= age %>
-                </h2>
-                <img src="static/img/ejs.png" alt="ejs" />
+        <% } %>
     </div>
 </body>
 

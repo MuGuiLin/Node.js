@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户管理</title>
-    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/base.css" />
 </head>
 
 <body>
@@ -19,7 +19,7 @@
         <!-- <%= name %>，
         <%= age %> -->
     </b>
-    <img src="static/img/logo.jpg" alt="logo" />
+    <img src="static/img/nest-big.jpg" alt="logo" />
 </body>
 
 </html>
