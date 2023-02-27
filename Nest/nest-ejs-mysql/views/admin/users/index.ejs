@@ -24,8 +24,11 @@
     <%- include('../header/index.ejs', {title: '用户管理' }); %>
     <div class="container text-center">
         <ul class="target">
-            <li><a href="https://ejs.bootcss.com/#install" target="_blank"
-                    rel="noopener noreferrer">https://ejs.bootcss.com/#install</a></li>
+            <li><a href="/users/get?uid=123&age=456" target="_blank" rel="noopener noreferrer">Get ?& URL参数获取，@Query()</a></li>
+            <li><a href="/users/getAll?uid=789&age=1011&name=沐枫" target="_blank" rel="noopener noreferrer">Get ?& URL所有参数获取，@Query()</a></li>
+            <li><a href="/users/getOne/666" target="_blank" rel="noopener noreferrer">Get动态路由URL参数获取，@Param()</a></li>
+            <li><a href="/users/getTwo/10086/10000" target="_blank" rel="noopener noreferrer">Get动态路由多个URL参数获取，@Param()</a></li>
+            <li><a href="https://ejs.bootcss.com/#install" target="_blank" rel="noopener noreferrer">https://ejs.bootcss.com/#install</a></li>
             <li>&lt;% '脚本' 标签，用于流程控制，无输出。</li>
             <li>&lt;%_ 删除其前面的空格符</li>
             <li>&lt;%= 输出数据到模板（输出是转义 HTML 标签）</li>

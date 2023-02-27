@@ -13,9 +13,10 @@ import { AppService } from './app.service';
 import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
 import { NewsModule } from './news/news.module';
+import { BootstrapModule } from './bootstrap/bootstrap.module';
 
 @Module({
-  imports: [AdminModule, UsersModule, NewsModule],
+  imports: [AdminModule, UsersModule, NewsModule, BootstrapModule],
   controllers: [AppController],
   providers: [AppService],
 })

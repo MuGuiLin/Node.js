@@ -12,10 +12,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 188px 0;
+            padding: 80px 0;
         }
          .logo img{
             width: 188px;
+        }
+        .nav{
+            padding: 80px 0;
         }
     </style>
 </head>
@@ -33,6 +36,8 @@
                 <h3>
                     <%= title %>
                 </h3>
+                <a href="https://www.nestjs.com.cn" target="_blank" rel="noopener noreferrer">Nest中文官网</a>、
+                <a href="https://nestjs.com" target="_blank" rel="noopener noreferrer">Nest英文官网</a>
             </div>
         </div>
         <div class="row logo">
@@ -43,7 +48,7 @@
                 <img src="/static/img/ts-logo.webp" class="rounded" alt="ts" sizes="" srcset="" />
             </div>
             <div class="col">
-                <img src="/static/img/mysql-logo.jpg" class="rounded" alt="mysql" sizes="" srcset="" />
+                <img src="/static/img/mysql-logo.jpg" class="rounded img-thumbnail" alt="mysql" sizes="" srcset="" />
             </div>
             <div class="col">
                 <img src="/static/img/ejs-logo.png" class="rounded" alt="ejs" sizes="" srcset="" />
@@ -56,8 +61,13 @@
             </div>
         </div>
         <div class="row">
+            <div class="col nav">
+                <a href="/admin">admin</a>、<a href="/users">users</a>、<a href="/news">news</a>、<a href="/bootstrap">bootstrap</a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
-                <a href="/admin">to admin</a>、<a href="/users">to users</a> 、<a href="/news">to news</a>
+                <img src="/static/img/ApiRequest.png" class="img-fluid img-thumbnail" alt="" sizes="" srcset="" />
             </div>
         </div>
     </div>
