@@ -1,6 +1,13 @@
 <link rel="stylesheet" href="static/css/header.css">
 <header>
   <nav class="navbar bg-primary navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">
+        <img src="https://v5.bootcss.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="Bootstrap" width="30"
+          height="24">
+        Bootstrap
+      </a>
+    </div>
     <div class="container-fluid">
       <a class="navbar-brand" href="/">首 页</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -14,7 +21,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/news">新闻管理</a>
-          </li> 
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/bootstrap">Bootstrap UI</a>
           </li>
@@ -36,7 +43,7 @@
           </li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control me-2" type="search" placeholder="Search搜索！" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>
@@ -46,4 +53,13 @@
     <%= title %>
   </h1>
   <hr>
+  <script src="static/js/bootstrap.js"></script>
+  <script>
+    document.querySelectorAll('#navbarSupportedContent a').forEach(o => {
+      o.classList = 'nav-link';
+      if (location.href === o.href) {
+        o.classList = 'nav-link active';
+      }
+    })
+  </script>
 </header>

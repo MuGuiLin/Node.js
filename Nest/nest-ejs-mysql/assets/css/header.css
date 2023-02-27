@@ -4,3 +4,10 @@ h1 {
 .active {
   background: blueviolet;
 }
+.nav-link {
+  width: 118px;
+  text-align: center;
+}
+input.form-control {
+  width: 200px;
+}

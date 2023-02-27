@@ -13,9 +13,21 @@ import {
   Body,
   Ip,
   HostParam,
+  UseInterceptors,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 
+import { AuthGuard } from '../guards/auth.guard';
+import { LoggingInterceptor } from '../interceptor/logging.interceptor';
+
+import { UserLevel } from '../decorator/user.decorator';
+
+/**
+ * @装饰器 在Next.js中大量的使用，很多思想来自于Angural.js
+ */
+// @UseGuards(AuthGuard) // 看守器(对当前整个控制器起作用)
+// @UseInterceptors(LoggingInterceptor) // 拦截器(对当前整个控制器起作用)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -33,11 +45,30 @@ export class UsersController {
    */
 
   // req.params
+  @UseGuards(new AuthGuard(0.1)) // 看守器(传参)
   @Get('get')
-  getUser(@Query('uid') uid: string, @Query('age') age: number): any {
+  // getUser(
+  //   @Query('uid') uid: string,
+  //   @Query('age') age: number,
+  //   @UserLevel() level: number,
+  // ): any {
+  //   console.log(level);
+  //   return this.usersService.getUser(uid, age);
+  // }
+  getUser(
+    @Query('uid') uid: string,
+    @Query('age') age: number,
+    @UserLevel('levelName') levelName: number,
+  ): any {
+    console.log(
+      `自定义装饰器UserLevel('指定返回levelName字段')--------`,
+      levelName,
+    );
     return this.usersService.getUser(uid, age);
   }
 
+  // @UseGuards(AuthGuard) // 看守器(只对当前这个子路由起作用)
+  // @UseInterceptors(LoggingInterceptor) // 拦截器(只对当前这个子路由起作用)
   @Get('getAll')
   getAllUser(@Headers('auth') auth: string, @Query() pars?: any) {
     console.log('获取Headers参数', auth);
