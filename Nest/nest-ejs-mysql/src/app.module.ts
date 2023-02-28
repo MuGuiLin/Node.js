@@ -14,9 +14,16 @@ import { AdminModule } from './admin/admin.module';
 import { UsersModule } from './users/users.module';
 import { NewsModule } from './news/news.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
+import { SawggerModule } from './sawgger/sawgger.module';
 
 @Module({
-  imports: [AdminModule, UsersModule, NewsModule, BootstrapModule],
+  imports: [
+    AdminModule,
+    UsersModule,
+    NewsModule,
+    BootstrapModule,
+    SawggerModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   getHello(): any {
     return {
-      title: 'Hello Next、Ts、MySQL、Ejs、Less、Bootstrap!',
+      title: 'Hello Next、Ts、Sawgger、MySQL、Ejs、Less、Bootstrap!',
     };
   }
 }
