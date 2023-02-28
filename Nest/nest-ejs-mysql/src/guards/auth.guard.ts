@@ -1,8 +1,9 @@
 /**
- * 守卫(看守器)
+ * 守卫(看守器，一般多用于用户登录鉴权)
  * https://docs.nestjs.com/guards#authorization-guard
  * https://www.nestjs.com.cn/guards
  */
+
 // @@filename(auth.guard)
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Observable } from 'rxjs';

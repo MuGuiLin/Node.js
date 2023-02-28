@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 import { NewsModule } from './news/news.module';
 import { BootstrapModule } from './bootstrap/bootstrap.module';
 import { SawggerModule } from './sawgger/sawgger.module';
+import { RouterModule } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -23,6 +24,17 @@ import { SawggerModule } from './sawgger/sawgger.module';
     NewsModule,
     BootstrapModule,
     SawggerModule,
+
+    // RouterModule.register([
+    //   {
+    //     path: 'admin',
+    //     module: AppModule,
+    //   },
+    //   {
+    //     path: 'admin',
+    //     module: UsersModule,
+    //   },
+    // ]),
   ],
   controllers: [AppController],
   providers: [AppService],
